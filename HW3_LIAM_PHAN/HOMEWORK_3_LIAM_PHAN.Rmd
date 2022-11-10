@@ -20,7 +20,7 @@ output:
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE, warning=FALSE, comment=FALSE, message=FALSE,results="asis")
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, comment=FALSE, message=FALSE)
 
 ```
 
@@ -95,7 +95,7 @@ flextable(head(ToyotaDT,2)) %>% fontsize(size = 8, part = "all")
 > Dataset Description: The file ToyotaCorolla.csv contains data on used cars on sale during late summer of 2004 in the Netherlands. It has 1436 records containing detail on 38 attributes, including Price, Age, Kilometers, HP (Horse Power), and other specifications.
 
 
-```{r summary of dataset}
+```{r summary of dataset,results="asis"}
 
 dfSummary(ToyotaDT, 
           plain.ascii  = FALSE, 
@@ -169,6 +169,7 @@ with the outcome variable **Price** and predictor variables **Age_08**, **KM**, 
 
 > Dummy: Fuel Type, Automatic, Mfr_Guarantee, Airco, Automatic_airco, CD_Player, Powered Windows, Sport_Model, Tow_Bar
 
+### Running the Linear Regression
 
 ```{r regression model}
 
@@ -180,10 +181,16 @@ options(scipen = 999)
 
 summary(Regression_Price)
 
-
 ```
 
+
+> Taking into account all the requested variables in our linear regression without further analysis or variable selection, we can observe a fairly high Multiple R-squared, close to 0.8915 and a fit of 0.8891. We have a very significant F-statistic, close to 0 which means that this model is already quite complex and better than a naive model including only the intercept. The most significant variables are the **Age** of the car, the number of kilometres (**KM**) and the automatic air conditioning (**Automatic_airco**).
+
+
+
 ### a. What appear to be the three or four most important car specifications for predicting the car's price?
+
+
 
 ### b. Using metrics you consider usefull, assess the performance of the model in predicting prices. 
 
