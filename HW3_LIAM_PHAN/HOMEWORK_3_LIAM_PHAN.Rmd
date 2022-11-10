@@ -50,6 +50,8 @@ library(naivebayes) # Naive Bayes Function
 library(caret) # Confusion Matrix
 library(leaps) # Exhaustive Search
 library(forecast) # Predictions
+library(neuralnet) # Neural Network
+library(nnet) # Neural Network
 
 ```
 
@@ -355,14 +357,6 @@ Use predictors **Age_08_04**, **KM**, **Fuel_Type**, **HP**, **Automatic**, **Do
 
 
 ```{r neural network}
-
-
-
-
-
-
-
-
 
 
 
