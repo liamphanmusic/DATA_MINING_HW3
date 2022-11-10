@@ -195,8 +195,35 @@ summary(Regression_Price)
 
 ```{r exhaustive search}
 
+# use regsubsets() in package leaps to run an exhaustive search.
+library(leaps)
+
+# Duplicate the Dataset Training for Modification of Dummy
+Training_Search <- Training
+
+# create dummies for fuel type
+Fuel_Type <- as.data.frame(model.matrix(~ 0 + Fuel_Type, data=Training_Search))
+
+# replace Fuel_Type column with 2 dummies
+Training_Search <- cbind(Training_Search[,-8], Fuel_Type[,])
+
+# Search
+search <- regsubsets(Price ~ Age_08_04 + KM + Fuel_TypeCNG + Fuel_TypeDiesel + Fuel_TypePetrol + HP + Automatic + Doors + Quarterly_Tax + Mfr_Guarantee + Guarantee_Period + Airco + Automatic_airco + CD_Player + Powered_Windows + Sport_Model + Tow_Bar, data = Training_Search, nbest = 1, nvmax = dim(Training_Search)[2],
+method = "exhaustive")
+sum <- summary(search)
+
+# show models
+sum$which
+
+# show metrics
+sum$rsq
+sum$adjr2
+sum$cp
 
 ```
+
+
+> 
 
 ### 2. Popular Subset Selection Algorithms
 
