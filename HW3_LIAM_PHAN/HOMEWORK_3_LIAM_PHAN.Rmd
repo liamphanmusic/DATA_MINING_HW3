@@ -9,6 +9,7 @@ output:
     lightbox: true
     gallery: true
     highlight: tango
+    code_folding: hide
 ---
 
 # <span style="color: #1c6155;">Quick Start</span> 
@@ -44,40 +45,56 @@ library(caret) # Confusion Matrix
 
 # <span style="color: #1c6155;">Dataset Preparation</span> 
 
-```{r clean, include=FALSE}
+```{r empty environment, include=FALSE}
 
 rm(list = ls()) # clean environment
 
 ```
 
-> Loading the dataset called "ToyotaCorolla.csv" given for the Homework
+## Loading the dataset called "ToyotaCorolla.csv"
 
-```{r 2,echo=FALSE, warning=FALSE, comment=FALSE}
+```{r loading dataset,echo=TRUE, warning=FALSE, comment=FALSE}
 
+# Load the Dataset with Fread()
 ToyotaDT <- fread("DATA/ToyotaCorolla.csv")
 
-str(ToyotaDT)
+```
+
+
+## Quick Preview
+
+```{r preview of dataset, echo=TRUE, warning=FALSE, comment=FALSE}
+
+# Preview of the Dataset
+flextable(head(ToyotaDT,2)) %>% fontsize(size = 8, part = "all")
+
+```
+
+
+> Dataset Description: 
+
+```{r summary of dataset,echo=TRUE, warning=FALSE, comment=FALSE}
+
+
+# Print the Summary to HTML
+print(dfSummary(ToyotaDT, varnumbers = FALSE, 
+                valid.col    = FALSE, 
+                graph.magnif = 0.75), method="render")
 
 ```
 
 <center>
 
-```{r 22, echo=FALSE, warning=FALSE, comment=FALSE}
-
-# Quick Preview of the Dataset
-renderDT()
-
-```
-
-```{r 222, echo=FALSE, warning=FALSE, comment=FALSE}
+```{r 2222, echo=FALSE, warning=FALSE, comment=FALSE}
 
 # Missing Variables Plot for the Dataset
 gg_miss_var(ToyotaDT, show_pct = TRUE)
 
 ```
 
-
 </center>
+
+> We can see that there is no missing values in our dataset.
 
 
 # <span style="color: #1c6155;">Ex 6.4</span> 
