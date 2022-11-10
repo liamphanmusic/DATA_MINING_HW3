@@ -195,7 +195,7 @@ summary(Regression_Price)
 
 ### 1. Exhaustive Search
 
-```{r exhaustive search, warning=FALSE}
+```{r exhaustive search}
 
 # use regsubsets() in package leaps to run an exhaustive search.
 library(leaps)
