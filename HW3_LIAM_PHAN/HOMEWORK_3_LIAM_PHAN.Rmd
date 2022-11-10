@@ -162,15 +162,15 @@ with the outcome variable **Price** and predictor variables **Age_08**, **KM**, 
 
 ### Outcome Variable
 
-> Numerical: Price
+> *Numerical*: Price
 
 <br />
 
 ### Explanatory Variables
 
-> Numerical: Age_08, KM, HP, Doors, Quarterly_Tax, Quarantee_Period
+> **Numerical**: Age_08, KM, HP, Doors, Quarterly_Tax, Quarantee_Period
 
-> Categorical/Dummy: Fuel Type, Automatic, Mfr_Guarantee, Airco, Automatic_airco, CD_Player, Powered Windows, Sport_Model, Tow_Bar
+> **Categorical/Dummy**: Fuel Type, Automatic, Mfr_Guarantee, Airco, Automatic_airco, CD_Player, Powered Windows, Sport_Model, Tow_Bar
 
 <br />
 
