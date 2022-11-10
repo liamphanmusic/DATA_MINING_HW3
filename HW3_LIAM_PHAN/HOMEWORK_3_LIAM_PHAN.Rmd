@@ -1,5 +1,5 @@
 ---
-title: "HOMEWORK 1 - Creating Value Through Data Mining (S402010)"
+title: "HOMEWORK 3 - Creating Value Through Data Mining (S402010)"
 author: "Liam Phan"
 date: "`r Sys.Date()`"
 output:
