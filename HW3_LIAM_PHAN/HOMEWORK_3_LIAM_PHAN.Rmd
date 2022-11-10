@@ -262,11 +262,26 @@ sum$cp
 
 #### 2.1 Forward Selection
 
+```{r forward, warning=FALSE}
 
+
+```
 
 #### 2.2 Backward Elimination
 
+
+```{r forward, warning=FALSE}
+
+
+```
+
 #### 2.3 Stepwise Regression
+
+
+```{r forward, warning=FALSE}
+
+
+```
 
 
 ### a. What appear to be the three or four most important car specifications for predicting the car's price?
