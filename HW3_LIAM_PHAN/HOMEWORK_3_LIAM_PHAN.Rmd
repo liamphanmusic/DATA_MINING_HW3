@@ -234,6 +234,8 @@ sum$which
 sum$rsq
 ```
 
+> R-Squared keep increasing when we add more and more variables to the model, which is already expected since it doesn't account for the number of parameter (no penalty)
+
 <br />
 
 ### Adjusted R-Squared
@@ -241,6 +243,8 @@ sum$rsq
 ```{r adjusted R-squared, warning=FALSE}
 sum$adjr2
 ```
+
+> Adjusted R-Squared keep increasing until the 15th value, 0.8890985 which is slight higher than the last one (16th).
 
 <br />
 
@@ -252,11 +256,13 @@ sum$cp
 
 <br />
 
->  
+>  The closest Cp to P+1 is the last one (16h value) which is 16, close to 17 = p+1 = 16+1.
 
 ### 2. Popular Subset Selection Algorithms
 
 #### 2.1 Forward Selection
+
+
 
 #### 2.2 Backward Elimination
 
