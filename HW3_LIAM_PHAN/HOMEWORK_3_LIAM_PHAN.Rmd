@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, comment=FALSE, message=FALSE, 
 
 ```
 
-# <span style="color: #1c6155;">Quick Start</span> 
+# <span style="color: #1c6155;">Loading Packages</span> 
 
 ## Loading Packages
 
@@ -345,7 +345,39 @@ hist(all.residuals, breaks = 25, xlab = "Residuals", main = "", col = "#1c6155")
 
 # <span style="color: #1c6155;">Ex 11.3</span> 
 
+## Car Sales 
 
+The Goal is to predict the price of a used Toyota Corolla based on its specifications.
+
+### a. Fit a neural network model to the data. Use a single hidden layer with 2 nodes. 
+
+Use predictors **Age_08_04**, **KM**, **Fuel_Type**, **HP**, **Automatic**, **Doors**, **Quarterly_Tax**, **Mfr_Guarantee**, **Guarantee_Period**, **Airco**, **Automatic_airco**, **CD_Player**, **Powered_Windows**, **Sport_Model**, and **Tow_Bar**.
+
+
+```{r neural network}
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+
+
+
+
+#### i. What happens to the RMS error for the training data as the number of layers and nodes increases ?
+
+#### ii. What happens to the RMS error for the validation data?
+
+#### iii. Comment on the appropriate number of layers and nodes for this application. 
 
 
 
