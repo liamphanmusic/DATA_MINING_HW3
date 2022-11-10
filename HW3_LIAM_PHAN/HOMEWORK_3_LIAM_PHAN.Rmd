@@ -12,6 +12,12 @@ output:
     code_folding: hide
 ---
 
+<style type="text/css">
+  body{
+  font-size: 8pt;
+}
+</style>
+
 ```{r setup, include=FALSE}
 
 knitr::opts_chunk$set(echo = TRUE, warning=FALSE, comment=FALSE, message=FALSE,results="asis")
@@ -26,7 +32,7 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, comment=FALSE, message=FALSE,r
 
 ## Loading Packages
 
-```{r 1, warning=FALSE, message=FALSE }
+```{r loading packages}
 
 library(data.table) # Efficient Dataframe 
 library(lubridate) # For Dates 
@@ -48,7 +54,6 @@ library(naivebayes) # Naive Bayes Function
 library(caret) # Confusion Matrix
 
 ```
-
 
 
 # <span style="color: #1c6155;">Dataset Preparation</span> 
@@ -122,9 +127,9 @@ gg_miss_var(ToyotaDT, show_pct = TRUE)
 
 ## 6.4 Predicting Prices of Used Cars
 
-### Split the data into training (50%), validation (30%), and test (20%) datasets.
+Split the data into training (50%), validation (30%), and test (20%) datasets.
 
-```{r Splitting Dataset}
+```{r splitting dataset}
 
 # Setting Seed
 set.seed(1)
@@ -141,18 +146,42 @@ Prop_Validation <- (nrow(Validation)/nrow(ToyotaDT))*100
 Prop_Test <- (nrow(Test)/nrow(ToyotaDT))*100
 
 # Print Proportion
-paste(round(Prop_Training,2),"% In Training",round(Prop_Validation,2),"% In Validation",round(Prop_Test,2),"% In Test")
+paste("The Proportions are:", round(Prop_Training,2),"% In Training,",round(Prop_Validation,2),"% In Validation, and ",round(Prop_Test,2),"% In Test")
 
 
 ```
 
+<br />
 
-### Run a multiple linear regression with the outcome variable Price and predictor variables Age_08, KM, Fuel_Type, HP, Automatic, Doors, Quarterly_Tax, Mfr_Guarantee, Guarantee_Period, Airco, Automatic_airco, CD_Player, Powered Windows, Sport_Model, and Tow_Bar. 
+### Run a multiple linear regression 
 
-> Numerical: 
+with the outcome variable **Price** and predictor variables **Age_08**, **KM**, **Fuel_Type**, **HP**, **Automatic**, **Doors**, **Quarterly_Tax**, **Mfr_Guarantee**, **Guarantee_Period**, **Airco**, **Automatic_airco**, **CD_Player**, **Powered_Windows**, **Sport_Model**, and **Tow_Bar**. 
 
-> Dummy: 
+<br />
 
+### Outcome Variable
+
+> Numerical: Price
+
+### Explanatory Variables
+
+> Numerical: Age_08, KM, HP, Doors, Quarterly_Tax, Quarantee_Period
+
+> Dummy: Fuel Type, Automatic, Mfr_Guarantee, Airco, Automatic_airco, CD_Player, Powered Windows, Sport_Model, Tow_Bar
+
+
+```{r regression model}
+
+# Linear OLS Regression on Training 
+Regression_Price <- lm(Price ~ Age_08_04 + KM + Fuel_Type + HP + Automatic + Doors + Quarterly_Tax + Mfr_Guarantee + Guarantee_Period + Airco + Automatic_airco + CD_Player + Powered_Windows + Sport_Model + Tow_Bar, data = Training)
+
+# Scientific Notation
+options(scipen = 999)
+
+summary(Regression_Price)
+
+
+```
 
 ### a. 
 
