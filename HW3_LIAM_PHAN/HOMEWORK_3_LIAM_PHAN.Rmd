@@ -358,6 +358,9 @@ Use predictors **Age_08_04**, **KM**, **Fuel_Type**, **HP**, **Automatic**, **Do
 
 ```{r neural network}
 
+library(neuralnet)
+library(nnet)
+library(caret)
 
 
 
