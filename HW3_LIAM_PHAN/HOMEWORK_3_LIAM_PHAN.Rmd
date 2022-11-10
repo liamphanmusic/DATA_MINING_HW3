@@ -20,7 +20,7 @@ output:
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo = TRUE, warning=FALSE, comment=FALSE, message=FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, comment=FALSE, message=FALSE, error = FALSE)
 
 ```
 
