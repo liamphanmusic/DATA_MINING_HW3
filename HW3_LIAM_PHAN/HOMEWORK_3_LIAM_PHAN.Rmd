@@ -183,9 +183,9 @@ summary(Regression_Price)
 
 ```
 
-### a. 
+### a. What appear to be the three or four most important car specifications for predicting the car's price?
 
-### b. 
+### b. Using metrics you consider usefull, assess the performance of the model in predicting prices. 
 
 # <span style="color: #1c6155;">Ex 9.3</span> 
 
