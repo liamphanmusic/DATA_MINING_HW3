@@ -170,7 +170,7 @@ with the outcome variable **Price** and predictor variables **Age_08**, **KM**, 
 
 > Numerical: Age_08, KM, HP, Doors, Quarterly_Tax, Quarantee_Period
 
-> Dummy: Fuel Type, Automatic, Mfr_Guarantee, Airco, Automatic_airco, CD_Player, Powered Windows, Sport_Model, Tow_Bar
+> Categorical/Dummy: Fuel Type, Automatic, Mfr_Guarantee, Airco, Automatic_airco, CD_Player, Powered Windows, Sport_Model, Tow_Bar
 
 <br />
 
@@ -191,9 +191,11 @@ summary(Regression_Price)
 
 > Taking into account all the requested variables in our linear regression without further analysis or variable selection, we can observe a fairly high Multiple R-squared, close to 0.8915 and a fit of 0.8891. We have a very significant F-statistic, close to 0 which means that this model is already quite complex and better than a naive model including only the intercept. The most significant variables are the **Age** of the car, the number of kilometres (**KM**) and the automatic air conditioning (**Automatic_airco**), since all have the smallest p-value.
 
+<br />
+
 ### 1. Exhaustive Search
 
-```{r exhaustive search}
+```{r exhaustive search, warning=FALSE}
 
 # use regsubsets() in package leaps to run an exhaustive search.
 library(leaps)
@@ -212,18 +214,45 @@ search <- regsubsets(Price ~ Age_08_04 + KM + Fuel_TypeCNG + Fuel_TypeDiesel + F
 method = "exhaustive")
 sum <- summary(search)
 
-# show models
-sum$which
-
-# show metrics
-sum$rsq
-sum$adjr2
-sum$cp
-
 ```
 
+<br />
 
-> 
+#### Show Models
+
+```{r sum, warning=FALSE}
+# show models
+sum$which
+```
+
+<br />
+
+#### R-Squared
+
+```{r R-squared, warning=FALSE}
+# show metrics
+sum$rsq
+```
+
+<br />
+
+#### Adjusted R-Squared
+
+```{r adjusted R-squared, warning=FALSE}
+sum$adjr2
+```
+
+<br />
+
+#### Cp
+
+```{r Cp, warning=FALSE}
+sum$cp
+```
+
+<br />
+
+>  
 
 ### 2. Popular Subset Selection Algorithms
 
