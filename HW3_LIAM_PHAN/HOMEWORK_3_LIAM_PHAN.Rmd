@@ -218,7 +218,7 @@ sum <- summary(search)
 
 <br />
 
-#### Show Models
+### Show Models
 
 ```{r sum, warning=FALSE}
 # show models
@@ -227,7 +227,7 @@ sum$which
 
 <br />
 
-#### R-Squared
+### R-Squared
 
 ```{r R-squared, warning=FALSE}
 # show metrics
@@ -236,7 +236,7 @@ sum$rsq
 
 <br />
 
-#### Adjusted R-Squared
+### Adjusted R-Squared
 
 ```{r adjusted R-squared, warning=FALSE}
 sum$adjr2
@@ -244,7 +244,7 @@ sum$adjr2
 
 <br />
 
-#### Cp
+### Cp
 
 ```{r Cp, warning=FALSE}
 sum$cp
