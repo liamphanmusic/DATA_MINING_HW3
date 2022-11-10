@@ -12,6 +12,14 @@ output:
     code_folding: hide
 ---
 
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, comment=FALSE, message=FALSE,results="asis")
+
+```
+
+
+
 # <span style="color: #1c6155;">Quick Start</span> 
 
 > Most of the plots are interactive, you can click or zoom to get more details ! Also don't hesitate to click on plots, they will zoom automatically ! 
@@ -45,15 +53,16 @@ library(caret) # Confusion Matrix
 
 # <span style="color: #1c6155;">Dataset Preparation</span> 
 
-```{r empty environment, include=FALSE}
+```{r clean environment, include=FALSE}
 
-rm(list = ls()) # clean environment
+# Clean Environment
+rm(list = ls()) 
 
 ```
 
 ## Loading the dataset called "ToyotaCorolla.csv"
 
-```{r loading dataset,echo=TRUE, warning=FALSE, comment=FALSE}
+```{r loading dataset}
 
 # Load the Dataset with Fread()
 ToyotaDT <- fread("DATA/ToyotaCorolla.csv")
@@ -63,7 +72,7 @@ ToyotaDT <- fread("DATA/ToyotaCorolla.csv")
 
 ## Quick Preview
 
-```{r preview of dataset, echo=TRUE, warning=FALSE, comment=FALSE}
+```{r preview of dataset}
 
 # Preview of the Dataset
 flextable(head(ToyotaDT,2)) %>% fontsize(size = 8, part = "all")
@@ -73,19 +82,22 @@ flextable(head(ToyotaDT,2)) %>% fontsize(size = 8, part = "all")
 
 > Dataset Description: 
 
-```{r summary of dataset,echo=TRUE, warning=FALSE, comment=FALSE}
+```{r summary of dataset}
 
-
-# Print the Summary to HTML
-print(dfSummary(ToyotaDT, varnumbers = FALSE, 
-                valid.col    = FALSE, 
-                graph.magnif = 0.75), method="render")
+dfSummary(ToyotaDT, 
+          plain.ascii  = FALSE, 
+          style        = "grid", 
+          graph.magnif = 0.75, 
+          valid.col    = FALSE,
+          tmp.img.dir  = "/tmp")
 
 ```
 
+## Missing Variables Plot
+
 <center>
 
-```{r 2222, echo=FALSE, warning=FALSE, comment=FALSE}
+```{r 2222, echo=FALSE}
 
 # Missing Variables Plot for the Dataset
 gg_miss_var(ToyotaDT, show_pct = TRUE)
@@ -94,7 +106,7 @@ gg_miss_var(ToyotaDT, show_pct = TRUE)
 
 </center>
 
-> We can see that there is no missing values in our dataset.
+> We can see that there is no missing values in our dataset ToyotaCorolla.csv
 
 
 # <span style="color: #1c6155;">Ex 6.4</span> 
@@ -111,4 +123,5 @@ gg_miss_var(ToyotaDT, show_pct = TRUE)
 
 [Data Mining for Business Analytics: Concepts, Techniques, and Applications in R](https://www.wiley.com/en-us/Data+Mining+for+Business+Analytics:+Concepts,+Techniques,+and+Applications+in+R-p-9781118879368)
 
+[Summarytools in R Markdown Documents](https://cran.r-project.org/web/packages/summarytools/vignettes/rmarkdown.html)
 
