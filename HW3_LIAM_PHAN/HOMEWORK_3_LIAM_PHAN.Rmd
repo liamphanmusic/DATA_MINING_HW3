@@ -162,7 +162,7 @@ with the outcome variable **Price** and predictor variables **Age_08**, **KM**, 
 
 ### Outcome Variable
 
-> *Numerical*: Price
+> **Numerical**: Price
 
 <br />
 
