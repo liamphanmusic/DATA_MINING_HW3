@@ -306,11 +306,40 @@ summary(Regression_Price_Backward)
 
 ### b. Using metrics you consider usefull, assess the performance of the model in predicting prices. 
 
+
+### Computing Prediction with the Regression Model on Validation - Accuracy
+
 ```{r performance of the model}
 
+library(forecast)
+# use predict() to make predictions on a new set.
+car.lm.pred <- predict(Regression, Validation)
+options(scipen=999, digits = 0)
+some.residuals <- Validation$Price[1:20] - car.lm.pred[1:20]
+data.frame("Predicted" = car.lm.pred[1:20], "Actual" = Validation$Price[1:20],
+"Residual" = some.residuals)
+options(scipen=999, digits = 3)
+# use accuracy() to compute common accuracy measures.
+accuracy(car.lm.pred, Validation$Price)
 
 
 ```
+
+
+### Histogram of Validation Errors
+
+```{r performance of the model 2}
+
+library(forecast)
+car.lm.pred <- predict(Regression, Validation)
+all.residuals <- Validation$Price - car.lm.pred
+length(all.residuals[which(all.residuals > -1406 & all.residuals < 1406)])/400
+hist(all.residuals, breaks = 25, xlab = "Residuals", main = "")
+
+```
+
+> 
+
 
 # <span style="color: #1c6155;">Ex 9.3</span> 
 
