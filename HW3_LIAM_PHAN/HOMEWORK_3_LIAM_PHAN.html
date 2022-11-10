@@ -1201,7 +1201,8 @@ automatically !</p>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(summarytools) <span class="co"># Beautiful and Efficient Summary for Dataset</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pivottabler) <span class="co"># Pivot Table</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naivebayes) <span class="co"># Naive Bayes Function</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret) <span class="co"># Confusion Matrix</span></span></code></pre></div>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret) <span class="co"># Confusion Matrix</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaps) <span class="co"># Exhaustive Search</span></span></code></pre></div>
 </div>
 </div>
 <div id="dataset-preparation" class="section level1">
@@ -1218,7 +1219,7 @@ automatically !</p>
 <h2>Quick Preview</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Preview of the Dataset</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">flextable</span>(<span class="fu">head</span>(ToyotaDT,<span class="dv">2</span>)) <span class="sc">%&gt;%</span> <span class="fu">fontsize</span>(<span class="at">size =</span> <span class="dv">8</span>, <span class="at">part =</span> <span class="st">&quot;all&quot;</span>)</span></code></pre></div>
-<template id="9a537252-9a21-4c0f-90b6-c944789e437b"><style>
+<template id="37cf641f-026f-4cf0-8e30-dc86052d403d"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -1257,11 +1258,11 @@ background-color: transparent;
 .katex-display {
     margin: 0 0 !important;
 }
-</style><div class="tabwid"><style>.cl-74521734{}.cl-744b0f3e{font-family:'Arial';font-size:8pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-744dcfbc{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-744dcfbd{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-744df6e0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-744df6e1{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-744df6e2{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-744df6e3{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-744df6e4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-744df6e5{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class="cl-74521734"><thead><tr style="overflow-wrap:break-word;"><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Id</span></p></td><td class="cl-744df6e1"><p class="cl-744dcfbd"><span class="cl-744b0f3e">Model</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Price</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Age_08_04</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Mfg_Month</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Mfg_Year</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">KM</span></p></td><td class="cl-744df6e1"><p class="cl-744dcfbd"><span class="cl-744b0f3e">Fuel_Type</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">HP</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Met_Color</span></p></td><td class="cl-744df6e1"><p class="cl-744dcfbd"><span class="cl-744b0f3e">Color</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Automatic</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">CC</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Doors</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Cylinders</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Gears</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Quarterly_Tax</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Weight</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Mfr_Guarantee</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">BOVAG_Guarantee</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Guarantee_Period</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">ABS</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Airbag_1</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Airbag_2</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Airco</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Automatic_airco</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Boardcomputer</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">CD_Player</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Central_Lock</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Powered_Windows</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Power_Steering</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Radio</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Mistlamps</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Sport_Model</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Backseat_Divider</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Metallic_Rim</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Radio_cassette</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Parking_Assistant</span></p></td><td class="cl-744df6e0"><p class="cl-744dcfbc"><span class="cl-744b0f3e">Tow_Bar</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e3"><p class="cl-744dcfbd"><span class="cl-744b0f3e">TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">13,500</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">23</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">10</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">2,002</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">46,986</span></p></td><td class="cl-744df6e3"><p class="cl-744dcfbd"><span class="cl-744b0f3e">Diesel</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">90</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e3"><p class="cl-744dcfbd"><span class="cl-744b0f3e">Blue</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">2,000</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">3</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">4</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">5</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">210</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1,165</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">3</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e2"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">2</span></p></td><td class="cl-744df6e5"><p class="cl-744dcfbd"><span class="cl-744b0f3e">TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">13,750</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">23</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">10</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">2,002</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">72,937</span></p></td><td class="cl-744df6e5"><p class="cl-744dcfbd"><span class="cl-744b0f3e">Diesel</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">90</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e5"><p class="cl-744dcfbd"><span class="cl-744b0f3e">Silver</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">2,000</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">3</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">4</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">5</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">210</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1,165</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">3</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">1</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td><td class="cl-744df6e4"><p class="cl-744dcfbc"><span class="cl-744b0f3e">0</span></p></td></tr></tbody></table></div></template>
-<div class="flextable-shadow-host" id="812a6f58-899f-4fbc-b8b1-596af461a834"></div>
+</style><div class="tabwid"><style>.cl-d35e9fac{}.cl-d3575b66{font-family:'Arial';font-size:8pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d35a1ec8{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-d35a1ec9{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-d35a45d8{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d35a45d9{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d35a45da{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d35a45db{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d35a45dc{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d35a45dd{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class="cl-d35e9fac"><thead><tr style="overflow-wrap:break-word;"><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Id</span></p></td><td class="cl-d35a45d9"><p class="cl-d35a1ec9"><span class="cl-d3575b66">Model</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Price</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Age_08_04</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Mfg_Month</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Mfg_Year</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">KM</span></p></td><td class="cl-d35a45d9"><p class="cl-d35a1ec9"><span class="cl-d3575b66">Fuel_Type</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">HP</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Met_Color</span></p></td><td class="cl-d35a45d9"><p class="cl-d35a1ec9"><span class="cl-d3575b66">Color</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Automatic</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">CC</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Doors</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Cylinders</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Gears</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Quarterly_Tax</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Weight</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Mfr_Guarantee</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">BOVAG_Guarantee</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Guarantee_Period</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">ABS</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Airbag_1</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Airbag_2</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Airco</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Automatic_airco</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Boardcomputer</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">CD_Player</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Central_Lock</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Powered_Windows</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Power_Steering</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Radio</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Mistlamps</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Sport_Model</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Backseat_Divider</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Metallic_Rim</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Radio_cassette</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Parking_Assistant</span></p></td><td class="cl-d35a45d8"><p class="cl-d35a1ec8"><span class="cl-d3575b66">Tow_Bar</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45db"><p class="cl-d35a1ec9"><span class="cl-d3575b66">TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">13,500</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">23</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">10</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">2,002</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">46,986</span></p></td><td class="cl-d35a45db"><p class="cl-d35a1ec9"><span class="cl-d3575b66">Diesel</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">90</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45db"><p class="cl-d35a1ec9"><span class="cl-d3575b66">Blue</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">2,000</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">3</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">4</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">5</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">210</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1,165</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">3</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45da"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">2</span></p></td><td class="cl-d35a45dd"><p class="cl-d35a1ec9"><span class="cl-d3575b66">TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">13,750</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">23</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">10</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">2,002</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">72,937</span></p></td><td class="cl-d35a45dd"><p class="cl-d35a1ec9"><span class="cl-d3575b66">Diesel</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">90</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45dd"><p class="cl-d35a1ec9"><span class="cl-d3575b66">Silver</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">2,000</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">3</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">4</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">5</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">210</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1,165</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">3</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">1</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td><td class="cl-d35a45dc"><p class="cl-d35a1ec8"><span class="cl-d3575b66">0</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="6643e953-ba84-4ab6-aa4f-4d5b676f6a94"></div>
 <script>
-var dest = document.getElementById("812a6f58-899f-4fbc-b8b1-596af461a834");
-var template = document.getElementById("9a537252-9a21-4c0f-90b6-c944789e437b");
+var dest = document.getElementById("6643e953-ba84-4ab6-aa4f-4d5b676f6a94");
+var template = document.getElementById("37cf641f-026f-4cf0-8e30-dc86052d403d");
 var caption = template.content.querySelector("caption");
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
@@ -1315,7 +1316,7 @@ min &lt; med &lt; max:<br />
 1 &lt; 721.5 &lt; 1442<br />
 IQR (CV) : 719.5 (0.6)</td>
 <td>1436 distinct values</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAAGNJREFUWMPt1sENgDAIhWFWwA3EDWT/3YRA1Oitt6b/O/QV0u9ekbViEVWt2uLcqzoxdV6Lpof7GZsud7eqXPRU6cWH3i+f27+gUCgUCoVCoRPQ/PMN0iwoFAqFQuehNhBZKxf5GtEwYVw/mQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OCswMDowMN6u0OsAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDgrMDA6MDCv82hXAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAGNJREFUWMPt1sENgDAIhWFWwA3EDWT/3YRA1Oitt6b/O/QV0u9ekbViEVWt2uLcqzoxdV6Lpof7GZsud7eqXPRU6cWH3i+f27+gUCgUCoVCoRPQ/PMN0iwoFAqFQuehNhBZKxf5GtEwYVw/mQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1345,7 +1346,7 @@ IQR (CV) : 719.5 (0.6)</td>
 28 ( 1.9%)<br />
 27 ( 1.9%)<br />
 891 (62.0%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFIAAADKBAMAAADENwqGAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAAJRJREFUaN7t0sEJgDAQRFFbSAkxHbj996YHFU+ZUcQl+Of8IFn40zTO5m21dLfLFhFI5BvSr67o3Zb68ctFSOQr0q+u6NE8Mk3mluzL7Z+mbLEgkR3pt6TYE6kfPy+SByGRnvSrk47mkUNImkf+TSY3X+2LkMiu9FuSjuaRQ8jc5ikZ+b1Mbl7vuCjUFiTSkn51I2wFImUvruSzAGgAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MTc6NDgrMDA6MDDertDrAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjE3OjQ4KzAwOjAwr/NoVwAAAABJRU5ErkJggg==" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFIAAADKBAMAAADENwqGAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAJRJREFUaN7t0sEJgDAQRFFbSAkxHbj996YHFU+ZUcQl+Of8IFn40zTO5m21dLfLFhFI5BvSr67o3Zb68ctFSOQr0q+u6NE8Mk3mluzL7Z+mbLEgkR3pt6TYE6kfPy+SByGRnvSrk47mkUNImkf+TSY3X+2LkMiu9FuSjuaRQ8jc5ikZ+b1Mbl7vuCjUFiTSkn51I2wFImUvruSzAGgAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDCbvaLAAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAw6uAafAAAAABJRU5ErkJggg==" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1358,7 +1359,7 @@ min &lt; med &lt; max:<br />
 4350 &lt; 9900 &lt; 32500<br />
 IQR (CV) : 3500 (0.3)</td>
 <td>236 distinct values</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAAH5JREFUWMPt180NgCAMBWBWwA1oN7D772YNJopS0jR6kfcucPlCA+EvpbmSa0iTvWkpi6ygoKCgoKCgBnVfsU/qHvgVumilUSoioKCgoP+kejaWINUeKGifjn7gFqWa0bvEonw239G9uCDlK7hRaws6qLVUPnrMd+lRCiTNlQ1bLWFmu4LgnAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OCswMDowMN6u0OsAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDgrMDA6MDCv82hXAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAH5JREFUWMPt180NgCAMBWBWwA1oN7D772YNJopS0jR6kfcucPlCA+EvpbmSa0iTvWkpi6ygoKCgoKCgBnVfsU/qHvgVumilUSoioKCgoP+kejaWINUeKGifjn7gFqWa0bvEonw239G9uCDlK7hRaws6qLVUPnrMd+lRCiTNlQ1bLWFmu4LgnAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1371,7 +1372,7 @@ min &lt; med &lt; max:<br />
 1 &lt; 61 &lt; 80<br />
 IQR (CV) : 26 (0.3)</td>
 <td>77 distinct values</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAAJ9JREFUWMPt120KgCAMBmCvkDdo3qDd/26Zk7DScIM+mHvpR9D7ENiwcm6sTMx4AGDRDcx0hrjwKCIa1UlpKkQ0pBsbNfo9jWMMQhqPxWjLpXWV0QSM3iWPrYTmttHf0fhMJdSTE9FDWzG9bEcMem4bHZDmvyCg8Ch9aO9V7bTcxpi0rL5AK7tCF62PQBcN1apC2niZ9dDG1YcpCOLGygpgvdxMAiU6ewAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OCswMDowMN6u0OsAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDgrMDA6MDCv82hXAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAJ9JREFUWMPt120KgCAMBmCvkDdo3qDd/26Zk7DScIM+mHvpR9D7ENiwcm6sTMx4AGDRDcx0hrjwKCIa1UlpKkQ0pBsbNfo9jWMMQhqPxWjLpXWV0QSM3iWPrYTmttHf0fhMJdSTE9FDWzG9bEcMem4bHZDmvyCg8Ch9aO9V7bTcxpi0rL5AK7tCF62PQBcN1apC2niZ9dDG1YcpCOLGygpgvdxMAiU6ewAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1384,7 +1385,7 @@ min &lt; med &lt; max:<br />
 1 &lt; 5 &lt; 12<br />
 IQR (CV) : 5 (0.6)</td>
 <td>12 distinct values</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAAIBJREFUWMPt1lEKgCAMBuBdoW6g3qDd/26l1MQwcyOC8v8fRIXPifog0VjxMZMuOw3MvICCgoKCgoKCgvbTOf69nI1uHf4KTX9MG+WjEdo8tBva2sPT1EvUtLKQM9FwUfoleroqFS3L/5ZWHkgvlan8QNQ078FG0wgUFNQbQmNlBWwWwul4tqXQAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjE3OjQ4KzAwOjAw3q7Q6wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDoxNzo0OCswMDowMK/zaFcAAAAASUVORK5CYII=" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAIBJREFUWMPt1lEKgCAMBuBdoW6g3qDd/26l1MQwcyOC8v8fRIXPifog0VjxMZMuOw3MvICCgoKCgoKCgvbTOf69nI1uHf4KTX9MG+WjEdo8tBva2sPT1EvUtLKQM9FwUfoleroqFS3L/5ZWHkgvlan8QNQ078FG0wgUFNQbQmNlBWwWwul4tqXQAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAwm72iwAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMOrgGnwAAAAASUVORK5CYII=" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1403,7 +1404,7 @@ IQR (CV) : 3 (0)</td>
 2002 : 87 ( 6.1%)<br />
 2003 : 75 ( 5.2%)<br />
 2004 : 24 ( 1.7%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC8AAACDBAMAAADv118KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAAHJJREFUSMft0cEJwDAMA8CMUG9QJxvE++/WTwtNiCg4dl/S9x4CqZR/UseoHDc0G0IIBTi7zPmEOudcl5sRAgHOvvHgDE95JyQAnN3/oIDyTtgAuK7vqCW0dzEhGODsrgcVlRPSAM7ueFABNEIiwNmzcwG50gDgWSoqawAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OCswMDowMN6u0OsAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDgrMDA6MDCv82hXAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC8AAACDBAMAAADv118KAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAHJJREFUSMft0cEJwDAMA8CMUG9QJxvE++/WTwtNiCg4dl/S9x4CqZR/UseoHDc0G0IIBTi7zPmEOudcl5sRAgHOvvHgDE95JyQAnN3/oIDyTtgAuK7vqCW0dzEhGODsrgcVlRPSAM7ueFABNEIiwNmzcwG50gDgWSoqawAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1416,7 +1417,7 @@ min &lt; med &lt; max:<br />
 1 &lt; 63389.5 &lt; 243000<br />
 IQR (CV) : 44020.8 (0.5)</td>
 <td>1263 distinct values</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAAIRJREFUWMPt1cENwCAIBVBWcIS2G5T9d6scSEijFTmYtvyfeHyimCBRrhSTvWYr4zTowcwZqLQoSIWBgoL+muqECFBloCuo57frUE9lUFBQ0DAdzacHOqr8VWr/1knaYqArqDxakNZ1grpor8sOyp3Kr6at+zqpcrvFBOXb4c1smg3lygUW259SD7TZEQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OCswMDowMN6u0OsAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDgrMDA6MDCv82hXAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAIRJREFUWMPt1cENwCAIBVBWcIS2G5T9d6scSEijFTmYtvyfeHyimCBRrhSTvWYr4zTowcwZqLQoSIWBgoL+muqECFBloCuo57frUE9lUFBQ0DAdzacHOqr8VWr/1knaYqArqDxakNZ1grpor8sOyp3Kr6at+zqpcrvFBOXb4c1smg3lygUW259SD7TZEQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1430,7 +1431,7 @@ IQR (CV) : 44020.8 (0.5)</td>
 <td>17 ( 1.2%)<br />
 155 (10.8%)<br />
 1264 (88.0%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG8AAAA7BAMAAACH9MmyAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAAEtJREFUSMdjYBgZQEmQRCAwqnFU46hGAhpJ1TeAGpXAQJF0jcrGIDCqcVTjMNZIdu4gXseAa1QiFSighCoJYFTjqMahppHs3DHcAQCloxC2KjraJAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OCswMDowMN6u0OsAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDgrMDA6MDCv82hXAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG8AAAA7BAMAAACH9MmyAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAEtJREFUSMdjYBgZQEmQRCAwqnFU46hGAhpJ1TeAGpXAQJF0jcrGIDCqcVTjMNZIdu4gXseAa1QiFSighCoJYFTjqMahppHs3DHcAQCloxC2KjraJAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1443,7 +1444,7 @@ min &lt; med &lt; max:<br />
 69 &lt; 110 &lt; 192<br />
 IQR (CV) : 20 (0.1)</td>
 <td>12 distinct values</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAAGtJREFUWMPt11EKgCAMgOFdQW9Q3aDd/25tmJBRVKOHwv9/9oOBIirSV6kpj1a66piq6gyFQqFQKBQKhUJvU39+D0FqBgrdUf/PBelkDPoxmtcNjVAt5h+0HtwArevfoeVKPsmn3Az8NOmrBanFR+AHJsvaAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjE3OjQ4KzAwOjAw3q7Q6wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDoxNzo0OCswMDowMK/zaFcAAAAASUVORK5CYII=" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAGtJREFUWMPt11EKgCAMgOFdQW9Q3aDd/25tmJBRVKOHwv9/9oOBIirSV6kpj1a66piq6gyFQqFQKBQKhUJvU39+D0FqBgrdUf/PBelkDPoxmtcNjVAt5h+0HtwArevfoeVKPsmn3Az8NOmrBanFR+AHJsvaAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAwm72iwAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMOrgGnwAAAAASUVORK5CYII=" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1456,7 +1457,7 @@ Mean : 0.7<br />
 Max : 1</td>
 <td>0 : 467 (32.5%)<br />
 1 : 969 (67.5%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAqBAMAAADFUYHNAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAADtJREFUOMtjYBiaQAkDKApiAqhiZWN0MKp4VDGtFZOURAWJAuQoViIK4PQgFmA0qnhUMTUVk5REhxoAAKiwxI/U9NXrAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjE3OjQ4KzAwOjAw3q7Q6wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDoxNzo0OCswMDowMK/zaFcAAAAASUVORK5CYII=" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAqBAMAAADFUYHNAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADtJREFUOMtjYBiaQAkDKApiAqhiZWN0MKp4VDGtFZOURAWJAuQoViIK4PQgFmA0qnhUMTUVk5REhxoAAKiwxI/U9NXrAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAwm72iwAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMOrgGnwAAAAASUVORK5CYII=" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1484,7 +1485,7 @@ Max : 1</td>
 4 ( 0.3%)<br />
 31 ( 2.2%)<br />
 3 ( 0.2%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAC3BAMAAACI3OFGAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAAH5JREFUSMft0sENgDAIheGuwAjABnX/3dSmibaggaSHJvCO30GTv5SydgjPkiYCE1Hfi/hoq0lKHF/Vazh+/l5wUuI4q4pHa68Wm5Q47lsl+Wg1ECklbAn/q4L4Y41ESglHwpG433ySEsdWFZNcZKtKKIiTvuPYqm5xALvSqp0VmviRY24AsQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OCswMDowMN6u0OsAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDgrMDA6MDCv82hXAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAC3BAMAAACI3OFGAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAH5JREFUSMft0sENgDAIheGuwAjABnX/3dSmibaggaSHJvCO30GTv5SydgjPkiYCE1Hfi/hoq0lKHF/Vazh+/l5wUuI4q4pHa68Wm5Q47lsl+Wg1ECklbAn/q4L4Y41ESglHwpG433ySEsdWFZNcZKtKKIiTvuPYqm5xALvSqp0VmviRY24AsQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1497,7 +1498,7 @@ Mean : 0.1<br />
 Max : 1</td>
 <td>0 : 1356 (94.4%)<br />
 1 : 80 ( 5.6%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHYAAAAqBAMAAACUxbKuAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAADxJREFUSMdjYBh5QIkcANWrbEw6MBrVO6p3VC+KXkryoCA5gAp6gS5QJFcvMKxG9Y7qHdVLoV5K8uBIAgDX6OZt5ANisAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OCswMDowMN6u0OsAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDgrMDA6MDCv82hXAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHYAAAAqBAMAAACUxbKuAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADxJREFUSMdjYBh5QIkcANWrbEw6MBrVO6p3VC+KXkryoCA5gAp6gS5QJFcvMKxG9Y7qHdVLoV5K8uBIAgDX6OZt5ANisAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1510,7 +1511,7 @@ min &lt; med &lt; max:<br />
 1300 &lt; 1600 &lt; 16000<br />
 IQR (CV) : 200 (0.3)</td>
 <td>13 distinct values</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAADdJREFUWMPtyzEBACAIADAqWAEbSP9uelhAX7Z/Eb3kMR7dOquWqqqqqqqqqqqqqqpqn5ofopcNsAIsnmJM2TIAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MTc6NDgrMDA6MDDertDrAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjE3OjQ4KzAwOjAwr/NoVwAAAABJRU5ErkJggg==" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADdJREFUWMPtyzEBACAIADAqWAEbSP9uelhAX7Z/Eb3kMR7dOquWqqqqqqqqqqqqqqpqn5ofopcNsAIsnmJM2TIAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDCbvaLAAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAw6uAafAAAAABJRU5ErkJggg==" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1526,7 +1527,7 @@ IQR (CV) : 2 (0.2)</td>
 3 : 622 (43.3%)<br />
 4 : 138 ( 9.6%)<br />
 5 : 674 (46.9%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABOBAMAAACNj2ajAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhEwazq9/AAAAFNJREFUSMdjYBg8QFEQFxAYVTGqgkGQCiqUcABFuAplY+xgVMXQV0E49qmWxhTxqVCGOGtUxTBUQTj2BXECyssxJSUFArnB2HhUxVBXQTj2BwMAAPIs7C8Z2RKzAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjE3OjQ4KzAwOjAw3q7Q6wAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDoxNzo0OCswMDowMK/zaFcAAAAASUVORK5CYII=" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABOBAMAAACNj2ajAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAFNJREFUSMdjYBg8QFEQFxAYVTGqgkGQCiqUcABFuAplY+xgVMXQV0E49qmWxhTxqVCGOGtUxTBUQTj2BXECyssxJSUFArnB2HhUxVBXQTj2BwMAAPIs7C8Z2RKzAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAwm72iwAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMOrgGnwAAAAASUVORK5CYII=" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1536,7 +1537,7 @@ IQR (CV) : 2 (0.2)</td>
 [integer]</td>
 <td>1 distinct value</td>
 <td>4 : 1436 (100.0%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAAZCAQAAABZLoLcAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfmCwoOETEcPY1qAAAAZUlEQVRYw+3YsQ2AIBBA0TvjdG7ghG7AetKiCY2JEvn/ddcQfgIF5BlMy+gNGG74N9Z2OCa/8Ht2wiO20Xt7UblM2KNuOI3hNIbTGE5jOI3hNNjw27O0PFvlh3Lyv4cu7FE3nKYCjV4F6zd6pdwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDB42dtfAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjE3OjQ5KzAwOjAwCYRj4wAAAABJRU5ErkJggg==" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAAZCAQAAABZLoLcAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfmCwoOIi8SWdU5AAAAZUlEQVRYw+3YsQ2AIBBA0TvjdG7ghG7AetKiCY2JEvn/ddcQfgIF5BlMy+gNGG74N9Z2OCa/8Ht2wiO20Xt7UblM2KNuOI3hNIbTGE5jOI3hNNjw27O0PFvlh3Lyv4cu7FE3nKYCjV4F6zd6pdwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDCbvaLAAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAw6uAafAAAAABJRU5ErkJggg==" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1552,7 +1553,7 @@ IQR (CV) : 0 (0)</td>
 4 : 1 ( 0.1%)<br />
 5 : 1390 (96.8%)<br />
 6 : 43 ( 3.0%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHkAAABOBAMAAAD2q6RvAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAAFVJREFUWMPt1LkNACAMBEFKgA54OoD+eyOhAHTGQojdfAIH5xD+rSSliEajH9ASPqRv3o1Go321hA/pKpWXbkMJjUbvattC7/4Wi24djUZ7attCf2wCpGJwNr/IkDwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDB42dtfAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjE3OjQ5KzAwOjAwCYRj4wAAAABJRU5ErkJggg==" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHkAAABOBAMAAAD2q6RvAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAFVJREFUWMPt1LkNACAMBEFKgA54OoD+eyOhAHTGQojdfAIH5xD+rSSliEajH9ASPqRv3o1Go321hA/pKpWXbkMJjUbvattC7/4Wi24djUZ7attCf2wCpGJwNr/IkDwAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDCbvaLAAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAw6uAafAAAAABJRU5ErkJggg==" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1565,7 +1566,7 @@ min &lt; med &lt; max:<br />
 19 &lt; 85 &lt; 283<br />
 IQR (CV) : 16 (0.5)</td>
 <td>13 distinct values</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAAGRJREFUWMPt18ENgCAMQNGugBtQNrD772b1AiZGQzkh/x9L3qU9IbJWqW1T1Zw+e6RmBn2n53qj1GyHQqFQKBQKhUKh0Dmo/300SIsPf0PrHrppfYOOUb3KEerDcps3d+1N1uoAAtVSRO24ETkAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDB42dtfAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjE3OjQ5KzAwOjAwCYRj4wAAAABJRU5ErkJggg==" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAGRJREFUWMPt18ENgCAMQNGugBtQNrD772b1AiZGQzkh/x9L3qU9IbJWqW1T1Zw+e6RmBn2n53qj1GyHQqFQKBQKhUKh0Dmo/300SIsPf0PrHrppfYOOUb3KEerDcps3d+1N1uoAAtVSRO24ETkAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDCbvaLAAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAw6uAafAAAAABJRU5ErkJggg==" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1578,7 +1579,7 @@ min &lt; med &lt; max:<br />
 1000 &lt; 1070 &lt; 1615<br />
 IQR (CV) : 45 (0)</td>
 <td>59 distinct values</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAAGBJREFUWMPt1rsJwDAQBNFrQSVYLuH6780yKDBCv7VxIDSbPyY7zmyvxbQjaMv0dPcPVC0/qFqGQqFQKBQKhS5ElT+xoEoZCoVCof/Q2TNeobPlDh3VG/Rmo3qm8cVsr12Y6WO8d9UJUQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHQAAABUBAMAAAChGA4iAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAGBJREFUWMPt1rsJwDAQBNFrQSVYLuH6780yKDBCv7VxIDSbPyY7zmyvxbQjaMv0dPcPVC0/qFqGQqFQKBQKhS5ElT+xoEoZCoVCof/Q2TNeobPlDh3VG/Rmo3qm8cVsr12Y6WO8d9UJUQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1591,7 +1592,7 @@ Mean : 0.4<br />
 Max : 1</td>
 <td>0 : 848 (59.1%)<br />
 1 : 588 (40.9%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE8AAAAqBAMAAAAAIxtcAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADlJREFUOMtjYBgaQIkQUIAqVDYmAEYVjirEqZDoZCZICAiQqhCHhZgKsXvGaFThqEIiFBKdzAY7AACbI7tlMAuHhwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE8AAAAqBAMAAAAAIxtcAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADlJREFUOMtjYBgaQIkQUIAqVDYmAEYVjirEqZDoZCZICAiQqhCHhZgKsXvGaFThqEIiFBKdzAY7AACbI7tlMAuHhwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1604,7 +1605,7 @@ Mean : 0.9<br />
 Max : 1</td>
 <td>0 : 150 (10.4%)<br />
 1 : 1286 (89.6%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHEAAAAqBAMAAAB2GanXAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAAD5JREFUSMdjYBg5QAkMBEkAAlCdysZAYDSqc1TnqE5COsnPZaTooZZOJZKBAnIIkQRGdY7qHJk6yc9lIwEAAIcQ4cdsAfJLAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjE3OjQ5KzAwOjAweNnbXwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMAmEY+MAAAAASUVORK5CYII=" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHEAAAAqBAMAAAB2GanXAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAD5JREFUSMdjYBg5QAkMBEkAAlCdysZAYDSqc1TnqE5COsnPZaTooZZOJZKBAnIIkQRGdY7qHJk6yc9lIwEAAIcQ4cdsAfJLAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAwm72iwAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMOrgGnwAAAAASUVORK5CYII=" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1625,7 +1626,7 @@ IQR (CV) : 0 (0.8)</td>
 24 : 4 ( 0.3%)<br />
 28 : 1 ( 0.1%)<br />
 36 : 4 ( 0.3%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAACmBAMAAADwqRZKAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAAH1JREFUaN7t1LENwCAQQ1FWyAjABrD/brkiZRqfkELMd/+k00l2KWekyXlgn2IGEPgzmG7HJeczGEfXFIyvAoHeMN0ODa2AcWoO9jmAQOArTNdKVAtgBQKB20DZsQBAoBGUHQsABBpB2bEAQKARlB0LAATuB2XHAgCBRtA9N6Z7eXbSQjNKAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjE3OjQ5KzAwOjAweNnbXwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMAmEY+MAAAAASUVORK5CYII=" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHAAAACmBAMAAADwqRZKAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAH1JREFUaN7t1LENwCAQQ1FWyAjABrD/brkiZRqfkELMd/+k00l2KWekyXlgn2IGEPgzmG7HJeczGEfXFIyvAoHeMN0ODa2AcWoO9jmAQOArTNdKVAtgBQKB20DZsQBAoBGUHQsABBpB2bEAQKARlB0LAATuB2XHAgCBRtA9N6Z7eXbSQjNKAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAwm72iwAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMOrgGnwAAAAASUVORK5CYII=" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1638,7 +1639,7 @@ Mean : 0.8<br />
 Max : 1</td>
 <td>0 : 268 (18.7%)<br />
 1 : 1168 (81.3%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGcAAAAqBAMAAABcqVh4AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADxJREFUSMdjYBieQAkBBAkCAagmZWMYMBrVNKppmGoiK2sQVkktTUqkAAWMgCACjGoa1TQkNZGVNYYbAAD9V9Z9E/bXVgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGcAAAAqBAMAAABcqVh4AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADxJREFUSMdjYBieQAkBBAkCAagmZWMYMBrVNKppmGoiK2sQVkktTUqkAAWMgCACjGoa1TQkNZGVNYYbAAD9V9Z9E/bXVgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1651,7 +1652,7 @@ Mean : 1<br />
 Max : 1</td>
 <td>0 : 42 ( 2.9%)<br />
 1 : 1394 (97.1%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHkAAAAqBAMAAABlzukjAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAAD1JREFUSMdjYBi5QElJkAwgANWtbDSqe1T3qG5a6qYsh5Kjl1q6lcgCCrBQMyYHjOoe1T2qm1jdlOXQkQgAs/Dqz9yJw28AAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDB42dtfAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjE3OjQ5KzAwOjAwCYRj4wAAAABJRU5ErkJggg==" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHkAAAAqBAMAAABlzukjAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAAD1JREFUSMdjYBi5QElJkAwgANWtbDSqe1T3qG5a6qYsh5Kjl1q6lcgCCrBQMyYHjOoe1T2qm1jdlOXQkQgAs/Dqz9yJw28AAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDCbvaLAAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAw6uAafAAAAABJRU5ErkJggg==" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1664,7 +1665,7 @@ Mean : 0.7<br />
 Max : 1</td>
 <td>0 : 398 (27.7%)<br />
 1 : 1038 (72.3%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF0AAAAqBAMAAAAjeEqJAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADxJREFUOMtjYBj6QAkNCOIAAlD1ysYowGhU/aj6waSe1PQsSCQgV70SkUABu39xglH1o+oHQj2p6XkoAwBR68szHrfFMgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF0AAAAqBAMAAAAjeEqJAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADxJREFUOMtjYBj6QAkNCOIAAlD1ysYowGhU/aj6waSe1PQsSCQgV70SkUABu39xglH1o+oHQj2p6XkoAwBR68szHrfFMgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1677,7 +1678,7 @@ Mean : 0.5<br />
 Max : 1</td>
 <td>0 : 706 (49.2%)<br />
 1 : 730 (50.8%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEUAAAAqBAMAAAAXAYuVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADRJREFUOMtjYBh8QAkPEICqUTbGCYxG1QxfNcSkDUE8gBQ1+OxSIOxm41E1w1cNMWljMAEA7yywGwD/rQIAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDB42dtfAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjE3OjQ5KzAwOjAwCYRj4wAAAABJRU5ErkJggg==" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEUAAAAqBAMAAAAXAYuVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADRJREFUOMtjYBh8QAkPEICqUTbGCYxG1QxfNcSkDUE8gBQ1+OxSIOxm41E1w1cNMWljMAEA7yywGwD/rQIAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDCbvaLAAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAw6uAafAAAAABJRU5ErkJggg==" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1690,7 +1691,7 @@ Mean : 0.1<br />
 Max : 1</td>
 <td>0 : 1355 (94.4%)<br />
 1 : 81 ( 5.6%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHYAAAAqBAMAAACUxbKuAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADxJREFUSMdjYBh5QIkcANWrbEw6MBrVO6p3VC+KXkryoCA5gAp6gS5QJFcvMKxG9Y7qHdVLoV5K8uBIAgDX6OZt5ANisAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHYAAAAqBAMAAACUxbKuAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADxJREFUSMdjYBh5QIkcANWrbEw6MBrVO6p3VC+KXkryoCA5gAp6gS5QJFcvMKxG9Y7qHdVLoV5K8uBIAgDX6OZt5ANisAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1703,7 +1704,7 @@ Mean : 0.3<br />
 Max : 1</td>
 <td>0 : 1013 (70.5%)<br />
 1 : 423 (29.5%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFsAAAAqBAMAAAAuZjrOAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADlJREFUOMtjYBjaQIk4oABVrmxMFBhVPqqcTspJTMCCxAEB8pRjWItfObpXjUaVjyofUOUkJuChCgCRWsjxZjSJqAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFsAAAAqBAMAAAAuZjrOAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADlJREFUOMtjYBjaQIk4oABVrmxMFBhVPqqcTspJTMCCxAEB8pRjWItfObpXjUaVjyofUOUkJuChCgCRWsjxZjSJqAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1716,7 +1717,7 @@ Mean : 0.2<br />
 Max : 1</td>
 <td>0 : 1122 (78.1%)<br />
 1 : 314 (21.9%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAqBAMAAAC3nuN7AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADlJREFUSMdjYBheQIkEANWibEw0MBrVMqpl8GohI/ELkgDI14JssSJxWpC9P6plVMvQ1UJG4h8uAAAKBtIbrYsBBAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAqBAMAAAC3nuN7AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADlJREFUSMdjYBheQIkEANWibEw0MBrVMqpl8GohI/ELkgDI14JssSJxWpC9P6plVMvQ1UJG4h8uAAAKBtIbrYsBBAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1729,7 +1730,7 @@ Mean : 0.6<br />
 Max : 1</td>
 <td>0 : 603 (42.0%)<br />
 1 : 833 (58.0%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE0AAAAqBAMAAAAE1sthAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADtJREFUOMtjYBj8QAkHEIQCAag6ZWOswGhU3ag6bOqITVeCBACp6pQIAAX8/oCDUXWj6pDVEZuuBjMAAIiyuSOF7M0HAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjE3OjQ5KzAwOjAweNnbXwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMAmEY+MAAAAASUVORK5CYII=" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE0AAAAqBAMAAAAE1sthAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADtJREFUOMtjYBj8QAkHEIQCAag6ZWOswGhU3ag6bOqITVeCBACp6pQIAAX8/oCDUXWj6pDVEZuuBjMAAIiyuSOF7M0HAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAwm72iwAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMOrgGnwAAAAASUVORK5CYII=" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1742,7 +1743,7 @@ Mean : 0.6<br />
 Max : 1</td>
 <td>0 : 629 (43.8%)<br />
 1 : 807 (56.2%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAAAqBAMAAAAJyLsmAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADdJREFUOMtjYBjcQAkXEAQDAagyZWPswGhU2agyUhKSIH5AojIl/ECBgBegYFTZiFdGZEIarAAABai24bSnUkcAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDB42dtfAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjE3OjQ5KzAwOjAwCYRj4wAAAABJRU5ErkJggg==" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAAAqBAMAAAAJyLsmAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADdJREFUOMtjYBjcQAkXEAQDAagyZWPswGhU2agyUhKSIH5AojIl/ECBgBegYFTZiFdGZEIarAAABai24bSnUkcAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDCbvaLAAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAw6uAafAAAAABJRU5ErkJggg==" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1755,7 +1756,7 @@ Mean : 1<br />
 Max : 1</td>
 <td>0 : 32 ( 2.2%)<br />
 1 : 1404 (97.8%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHoAAAAqBAMAAACO+VIgAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADtJREFUSMdjYBi5QElRkBwA1a08qntU96humuqmLIeSpZdKupXIA7BQMyYHGI3qHtU9qptI3ZTl0JEIABUp6vGoaW/GAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjE3OjQ5KzAwOjAweNnbXwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMAmEY+MAAAAASUVORK5CYII=" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHoAAAAqBAMAAACO+VIgAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADtJREFUSMdjYBi5QElRkBwA1a08qntU96humuqmLIeSpZdKupXIA7BQMyYHGI3qHtU9qptI3ZTl0JEIABUp6vGoaW/GAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAwm72iwAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMOrgGnwAAAAASUVORK5CYII=" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1768,7 +1769,7 @@ Mean : 0.1<br />
 Max : 1</td>
 <td>0 : 1226 (85.4%)<br />
 1 : 210 (14.6%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGwAAAAqBAMAAACkSaOPAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADlJREFUSMdjYBjeQIlEANWmbEwSMBrVNqpteGkjM+MIkggo0wazXJE0bbAgGdU2qm1kaiMz4wxXAAAn/dsjeY8OMAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGwAAAAqBAMAAACkSaOPAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADlJREFUSMdjYBjeQIlEANWmbEwSMBrVNqpteGkjM+MIkggo0wazXJE0bbAgGdU2qm1kaiMz4wxXAAAn/dsjeY8OMAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1781,7 +1782,7 @@ Mean : 0.3<br />
 Max : 1</td>
 <td>0 : 1067 (74.3%)<br />
 1 : 369 (25.7%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAAAqBAMAAAC+dUMBAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADlJREFUSMdjYBgeQIloANWgbEwkMBrVMKphoDWQnLwFiQbkakC1VpGwBlRPj2oY1TCYNZCcvIc6AABKn82X0w2VBwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAAAqBAMAAAC+dUMBAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADlJREFUSMdjYBgeQIloANWgbEwkMBrVMKphoDWQnLwFiQbkakC1VpGwBlRPj2oY1TCYNZCcvIc6AABKn82X0w2VBwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1794,7 +1795,7 @@ Mean : 0.3<br />
 Max : 1</td>
 <td>0 : 1005 (70.0%)<br />
 1 : 431 (30.0%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFsAAAAqBAMAAAAuZjrOAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADlJREFUOMtjYBjaQIk4oABVrmxMFBhVPqqcTspJTMCCxAEB8pRjWItfObpXjUaVjyofUOUkJuChCgCRWsjxZjSJqAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFsAAAAqBAMAAAAuZjrOAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADlJREFUOMtjYBjaQIk4oABVrmxMFBhVPqqcTspJTMCCxAEB8pRjWItfObpXjUaVjyofUOUkJuChCgCRWsjxZjSJqAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1807,7 +1808,7 @@ Mean : 0.8<br />
 Max : 1</td>
 <td>0 : 330 (23.0%)<br />
 1 : 1106 (77.0%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGMAAAAqBAMAAABVQvgCAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADxJREFUSMdjYBheQAkZCOIFAlAtysYIYDSqZVTLkNVCRuIXJB5QoEWJeKCAxfsEwKiWUS2DWAsZiX+4AAAZBdH5agn60wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGMAAAAqBAMAAABVQvgCAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADxJREFUSMdjYBheQAkZCOIFAlAtysYIYDSqZVTLkNVCRuIXJB5QoEWJeKCAxfsEwKiWUS2DWAsZiX+4AAAZBdH5agn60wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1820,7 +1821,7 @@ Mean : 0.2<br />
 Max : 1</td>
 <td>0 : 1142 (79.5%)<br />
 1 : 294 (20.5%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGUAAAAqBAMAAABYXIhFAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADpJREFUSMdjYBh+QIkEoADVo2xMPBjVM6pnqOghJy8IkgAEKNCDbDexepDCwGhUz6ie4aKHnLwwnAAAgLHUOwq+BesAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDB42dtfAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjE3OjQ5KzAwOjAwCYRj4wAAAABJRU5ErkJggg==" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGUAAAAqBAMAAABYXIhFAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADpJREFUSMdjYBh+QIkEoADVo2xMPBjVM6pnqOghJy8IkgAEKNCDbDexepDCwGhUz6ie4aKHnLwwnAAAgLHUOwq+BesAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDCbvaLAAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAw6uAafAAAAABJRU5ErkJggg==" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1833,7 +1834,7 @@ Mean : 0.1<br />
 Max : 1</td>
 <td>0 : 1227 (85.4%)<br />
 1 : 209 (14.6%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGwAAAAqBAMAAACkSaOPAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADlJREFUSMdjYBjeQIlEANWmbEwSMBrVNqpteGkjM+MIkggo0wazXJE0bbAgGdU2qm1kaiMz4wxXAAAn/dsjeY8OMAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGwAAAAqBAMAAACkSaOPAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADlJREFUSMdjYBjeQIlEANWmbEwSMBrVNqpteGkjM+MIkggo0wazXJE0bbAgGdU2qm1kaiMz4wxXAAAn/dsjeY8OMAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1846,7 +1847,7 @@ Mean : 0<br />
 Max : 1</td>
 <td>0 : 1432 (99.7%)<br />
 1 : 4 ( 0.3%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAAqBAMAAACD5yJnAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADNJREFUSMdjYBjZQIlMANWubEwWMBrVPqp9VDs52inMsIJkAupoVxzVPqp9VPuI0T5SAQCOau4TZyxQ9wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDoxNzo0OSswMDowMHjZ218AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDAJhGPjAAAAAElFTkSuQmCC" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAAAqBAMAAACD5yJnAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADNJREFUSMdjYBjZQIlMANWubEwWMBrVPqp9VDs52inMsIJkAupoVxzVPqp9VPuI0T5SAQCOau4TZyxQ9wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0xMS0xMFQxNDozNDo0NyswMDowMJu9osAAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDDq4Bp8AAAAAElFTkSuQmCC" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1859,7 +1860,7 @@ Mean : 0.3<br />
 Max : 1</td>
 <td>0 : 1037 (72.2%)<br />
 1 : 399 (27.8%)</td>
-<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF0AAAAqBAMAAAAjeEqJAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDhExHD2NagAAADpJREFUOMtjYBj6QIlIoABVr2xMHBhVP6p+INSTmp4FiQQCZKpHt5eQejT/Go2qH1U/mNSTmp6HMgAASNbLM3Tg5DsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MTc6NDkrMDA6MDB42dtfAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjE3OjQ5KzAwOjAwCYRj4wAAAABJRU5ErkJggg==" /></td>
+<td><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF0AAAAqBAMAAAAjeEqJAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAD1BMVEX////9/v2mpqbw8PD///+xh0SBAAAAAnRSTlMAAHaTzTgAAAABYktHRACIBR1IAAAAB3RJTUUH5gsKDiIvElnVOQAAADpJREFUOMtjYBj6QIlIoABVr2xMHBhVP6p+INSTmp4FiQQCZKpHt5eQejT/Go2qH1U/mNSTmp6HMgAASNbLM3Tg5DsAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjItMTEtMTBUMTQ6MzQ6NDcrMDA6MDCbvaLAAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIyLTExLTEwVDE0OjM0OjQ3KzAwOjAw6uAafAAAAABJRU5ErkJggg==" /></td>
 <td>0<br />
 (0.0%)</td>
 </tr>
@@ -1884,7 +1885,7 @@ ToyotaCorolla.csv</p>
 <div id="ex-6.4" class="section level1">
 <h1><span style="color: #1c6155;">Ex 6.4</span></h1>
 <div id="predicting-prices-of-used-cars" class="section level2">
-<h2>6.4 Predicting Prices of Used Cars</h2>
+<h2>Predicting Prices of Used Cars</h2>
 <p>Split the data into training (50%), validation (30%), and test (20%)
 datasets.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting Seed</span></span>
@@ -1903,7 +1904,8 @@ datasets.</p>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Print Proportion</span></span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&quot;The Proportions are:&quot;</span>, <span class="fu">round</span>(Prop_Training,<span class="dv">2</span>),<span class="st">&quot;% In Training,&quot;</span>,<span class="fu">round</span>(Prop_Validation,<span class="dv">2</span>),<span class="st">&quot;% In Validation, and &quot;</span>,<span class="fu">round</span>(Prop_Test,<span class="dv">2</span>),<span class="st">&quot;% In Test&quot;</span>)</span></code></pre></div>
-<pre><code>FALSE [1] &quot;The Proportions are: 52.58 % In Training, 27.79 % In Validation, and  19.64 % In Test&quot;</code></pre>
+<p>[1] “The Proportions are: 52.58 % In Training, 27.79 % In Validation,
+and 19.64 % In Test”</p>
 <p><br /></p>
 <div id="run-a-multiple-linear-regression" class="section level3">
 <h3>Run a multiple linear regression</h3>
@@ -1923,6 +1925,7 @@ variables <strong>Age_08</strong>, <strong>KM</strong>,
 <blockquote>
 <p>Numerical: Price</p>
 </blockquote>
+<p><br /></p>
 </div>
 <div id="explanatory-variables" class="section level3">
 <h3>Explanatory Variables</h3>
@@ -1933,16 +1936,17 @@ variables <strong>Age_08</strong>, <strong>KM</strong>,
 <p>Dummy: Fuel Type, Automatic, Mfr_Guarantee, Airco, Automatic_airco,
 CD_Player, Powered Windows, Sport_Model, Tow_Bar</p>
 </blockquote>
+<p><br /></p>
 </div>
 <div id="running-the-linear-regression" class="section level3">
 <h3>Running the Linear Regression</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear OLS Regression on Training </span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Regression_Price <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Age_08_04 <span class="sc">+</span> KM <span class="sc">+</span> Fuel_Type <span class="sc">+</span> HP <span class="sc">+</span> Automatic <span class="sc">+</span> Doors <span class="sc">+</span> Quarterly_Tax <span class="sc">+</span> Mfr_Guarantee <span class="sc">+</span> Guarantee_Period <span class="sc">+</span> Airco <span class="sc">+</span> Automatic_airco <span class="sc">+</span> CD_Player <span class="sc">+</span> Powered_Windows <span class="sc">+</span> Sport_Model <span class="sc">+</span> Tow_Bar, <span class="at">data =</span> Training)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Scientific Notation</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Regression_Price)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear OLS Regression on Training </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Regression_Price <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Age_08_04 <span class="sc">+</span> KM <span class="sc">+</span> Fuel_Type <span class="sc">+</span> HP <span class="sc">+</span> Automatic <span class="sc">+</span> Doors <span class="sc">+</span> Quarterly_Tax <span class="sc">+</span> Mfr_Guarantee <span class="sc">+</span> Guarantee_Period <span class="sc">+</span> Airco <span class="sc">+</span> Automatic_airco <span class="sc">+</span> CD_Player <span class="sc">+</span> Powered_Windows <span class="sc">+</span> Sport_Model <span class="sc">+</span> Tow_Bar, <span class="at">data =</span> Training)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Scientific Notation</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Regression_Price)</span></code></pre></div>
 <pre><code>FALSE 
 FALSE Call:
 FALSE lm(formula = Price ~ Age_08_04 + KM + Fuel_Type + HP + Automatic + 
@@ -1988,8 +1992,24 @@ that this model is already quite complex and better than a naive model
 including only the intercept. The most significant variables are the
 <strong>Age</strong> of the car, the number of kilometres
 (<strong>KM</strong>) and the automatic air conditioning
-(<strong>Automatic_airco</strong>).</p>
+(<strong>Automatic_airco</strong>), since all have the smallest
+p-value.</p>
 </blockquote>
+</div>
+<div id="exhaustive-search" class="section level3">
+<h3>1. Exhaustive Search</h3>
+</div>
+<div id="popular-subset-selection-algorithms" class="section level3">
+<h3>2. Popular Subset Selection Algorithms</h3>
+<div id="forward-selection" class="section level4">
+<h4>2.1 Forward Selection</h4>
+</div>
+<div id="backward-elimination" class="section level4">
+<h4>2.2 Backward Elimination</h4>
+</div>
+<div id="stepwise-regression" class="section level4">
+<h4>2.3 Stepwise Regression</h4>
+</div>
 </div>
 <div id="a.-what-appear-to-be-the-three-or-four-most-important-car-specifications-for-predicting-the-cars-price" class="section level3">
 <h3>a. What appear to be the three or four most important car

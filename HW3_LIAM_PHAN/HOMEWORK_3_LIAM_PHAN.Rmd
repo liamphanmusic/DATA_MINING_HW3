@@ -52,6 +52,7 @@ library(summarytools) # Beautiful and Efficient Summary for Dataset
 library(pivottabler) # Pivot Table
 library(naivebayes) # Naive Bayes Function
 library(caret) # Confusion Matrix
+library(leaps) # Exhaustive Search
 
 ```
 
@@ -125,11 +126,11 @@ gg_miss_var(ToyotaDT, show_pct = TRUE)
 
 # <span style="color: #1c6155;">Ex 6.4</span> 
 
-## 6.4 Predicting Prices of Used Cars
+## Predicting Prices of Used Cars
 
 Split the data into training (50%), validation (30%), and test (20%) datasets.
 
-```{r splitting dataset}
+```{r splitting dataset, results='asis'}
 
 # Setting Seed
 set.seed(1)
@@ -163,11 +164,15 @@ with the outcome variable **Price** and predictor variables **Age_08**, **KM**, 
 
 > Numerical: Price
 
+<br />
+
 ### Explanatory Variables
 
 > Numerical: Age_08, KM, HP, Doors, Quarterly_Tax, Quarantee_Period
 
 > Dummy: Fuel Type, Automatic, Mfr_Guarantee, Airco, Automatic_airco, CD_Player, Powered Windows, Sport_Model, Tow_Bar
+
+<br />
 
 ### Running the Linear Regression
 
@@ -184,11 +189,27 @@ summary(Regression_Price)
 ```
 
 
-> Taking into account all the requested variables in our linear regression without further analysis or variable selection, we can observe a fairly high Multiple R-squared, close to 0.8915 and a fit of 0.8891. We have a very significant F-statistic, close to 0 which means that this model is already quite complex and better than a naive model including only the intercept. The most significant variables are the **Age** of the car, the number of kilometres (**KM**) and the automatic air conditioning (**Automatic_airco**).
+> Taking into account all the requested variables in our linear regression without further analysis or variable selection, we can observe a fairly high Multiple R-squared, close to 0.8915 and a fit of 0.8891. We have a very significant F-statistic, close to 0 which means that this model is already quite complex and better than a naive model including only the intercept. The most significant variables are the **Age** of the car, the number of kilometres (**KM**) and the automatic air conditioning (**Automatic_airco**), since all have the smallest p-value.
 
+### 1. Exhaustive Search
+
+```{r exhaustive search}
+
+
+```
+
+### 2. Popular Subset Selection Algorithms
+
+#### 2.1 Forward Selection
+
+#### 2.2 Backward Elimination
+
+#### 2.3 Stepwise Regression
 
 
 ### a. What appear to be the three or four most important car specifications for predicting the car's price?
+
+
 
 
 
