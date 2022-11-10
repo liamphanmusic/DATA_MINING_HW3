@@ -256,7 +256,7 @@ sum$cp
 
 <br />
 
->  The closest Cp to P+1 is the last one (16h value) which is 16, close to 17 = p+1 = 16+1.
+>  The closest Cp to P+1 is the last one (16th value) which is 16, close to 17 = p+1 = 16+1.
 
 ### 2. Popular Subset Selection Algorithms
 
@@ -264,33 +264,53 @@ sum$cp
 
 ```{r forward, warning=FALSE}
 
+# Setting Forward Selection
+Regression_Price_Forward <- step(Regression_Price, direction = "forward")
+
+summary(Regression_Price_Forward) 
 
 ```
 
 #### 2.2 Backward Elimination
 
 
-```{r forward, warning=FALSE}
+```{r backward, warning=FALSE}
 
+# Setting Backward Selection
+Regression_Price_Backward <- step(Regression_Price, direction = "backward")
+
+summary(Regression_Price_Backward) 
 
 ```
 
 #### 2.3 Stepwise Regression
 
 
-```{r forward, warning=FALSE}
+```{r stepwise, warning=FALSE}
 
+# Setting Backward Selection
+Regression_Price_Backward <- step(Regression_Price, direction = "both")
+
+summary(Regression_Price_Backward)
 
 ```
 
 
+> We can see that in both, Backward and Stepwise, only Mfr_Guarantee is dropped. Forward Selection keep all variables. 
+
 ### a. What appear to be the three or four most important car specifications for predicting the car's price?
 
 
-
+> Depending if we decided to drop the variable Mfr_Guarante after the Exhaustive Search and Popular Subset Selection Algorithms, we should have those 3-4 most important variable for predicting car's price: **Age**, **KM**, **Automatic_airco** and **Quarterly_Tax**.
 
 
 ### b. Using metrics you consider usefull, assess the performance of the model in predicting prices. 
+
+```{r performance of the model}
+
+
+
+```
 
 # <span style="color: #1c6155;">Ex 9.3</span> 
 
