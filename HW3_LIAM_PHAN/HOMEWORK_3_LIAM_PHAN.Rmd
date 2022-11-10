@@ -24,11 +24,7 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, comment=FALSE, message=FALSE, 
 
 ```
 
-
-
 # <span style="color: #1c6155;">Quick Start</span> 
-
-> Most of the plots are interactive, you can click or zoom to get more details ! Also don't hesitate to click on plots, they will zoom automatically ! 
 
 ## Loading Packages
 
@@ -257,7 +253,7 @@ sum$cp
 
 <br />
 
->  The closest Cp to P+1 is the last one (16th value) which is 16, close to 17 = p+1 = 16+1.
+>  The closest Cp to predictors+1 is the last one (16th value) which is 16, close to 17 = p+1 = 16+1.
 
 ### 2. Popular Subset Selection Algorithms
 
@@ -297,12 +293,12 @@ summary(Regression_Price_Backward)
 ```
 
 
-> We can see that in both, Backward and Stepwise, only Mfr_Guarantee is dropped. Forward Selection keep all variables. 
+> We can see that in both, Backward and Stepwise, only **Mfr_Guarantee** is dropped. Forward Selection keep all variables. 
 
 ### a. What appear to be the three or four most important car specifications for predicting the car's price?
 
 
-> Depending if we decided to drop the variable Mfr_Guarante after the Exhaustive Search and Popular Subset Selection Algorithms, we should have those 3-4 most important variable for predicting car's price: **Age**, **KM**, **Automatic_airco** and **Quarterly_Tax**.
+> After the Exhaustive Search and Popular Subset Selection Algorithms, we should have those 3-4 most important variable for predicting car's price: **Age**, **KM**, **Automatic_airco** and **Quarterly_Tax**. Depending if we decided to drop the variable **Mfr_Guarante**, we might get slight different results in predictions, but the most important variables for predictions should stay the same. The Following Performance Assessment keep the same full model.
 
 
 ### b. Using metrics you consider usefull, assess the performance of the model in predicting prices. 
@@ -323,11 +319,12 @@ options(scipen=999, digits = 3)
 # use accuracy() to compute common accuracy measures.
 accuracy(car.lm.pred, Validation$Price)
 
-
 ```
-
+> Here the resulting metrics for our predictions errors. The closest to 0 the better. 
 
 ### Histogram of Validation Errors
+
+<center>
 
 ```{r validation errors histogram}
 
@@ -335,16 +332,21 @@ library(forecast)
 car.lm.pred <- predict(Regression_Price, Validation)
 all.residuals <- Validation$Price - car.lm.pred
 length(all.residuals[which(all.residuals > -1406 & all.residuals < 1406)])/400
-hist(all.residuals, breaks = 25, xlab = "Residuals", main = "")
+hist(all.residuals, breaks = 25, xlab = "Residuals", main = "", col = "#1c6155")
 
 ```
 
-> 
+</center>
+
+> We can the residuals of our predictions on the validation set. The Spread is clearly visible, between -2000 and 2000 and normally distributed. Some extremes values for our residuals appear on the far right,.
 
 
 # <span style="color: #1c6155;">Ex 9.3</span> 
 
 # <span style="color: #1c6155;">Ex 11.3</span> 
+
+
+
 
 
 # <span style="color: #1c6155;">References</span>
