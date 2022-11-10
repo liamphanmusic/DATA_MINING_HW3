@@ -80,7 +80,10 @@ flextable(head(ToyotaDT,2)) %>% fontsize(size = 8, part = "all")
 ```
 
 
-> Dataset Description: 
+
+
+> Dataset Description: The file ToyotaCorolla.csv contains data on used cars on sale during late summer of 2004 in the Netherlands. It has 1436 records containing detail on 38 attributes, including Price, Age, Kilometers, HP (Horse Power), and other specifications.
+
 
 ```{r summary of dataset}
 
