@@ -347,6 +347,13 @@ hist(all.residuals, breaks = 25, xlab = "Residuals", main = "", col = "#1c6155")
 
 # <span style="color: #1c6155;">Ex 11.3</span> 
 
+```{r clean environment 2, include=FALSE}
+
+# Clean Environment
+rm(list = ls()) 
+
+```
+
 ## Car Sales 
 
 The Goal is to predict the price of a used Toyota Corolla based on its specifications.
@@ -356,7 +363,7 @@ The Goal is to predict the price of a used Toyota Corolla based on its specifica
 Use predictors **Age_08_04**, **KM**, **Fuel_Type**, **HP**, **Automatic**, **Doors**, **Quarterly_Tax**, **Mfr_Guarantee**, **Guarantee_Period**, **Airco**, **Automatic_airco**, **CD_Player**, **Powered_Windows**, **Sport_Model**, and **Tow_Bar**.
 
 
-### On our Training Set
+### Splitting Training and Validation Set - 60% VS 40%
 
 ```{r neural network}
 
@@ -375,13 +382,17 @@ ToyotaDT_NN <- fread("DATA/ToyotaCorolla.csv")
 ToyotaDT_NN <- ToyotaDT_NN[,c("Price","Age_08_04","KM","Fuel_Type","HP","Automatic","Doors","Quarterly_Tax","Mfr_Guarantee","Guarantee_Period","Airco","Automatic_airco","CD_Player","Powered_Windows","Sport_Model","Tow_Bar")]
 
 # Input Cutting Ratio
-probability_train <- 0.7
+probability_train <- 0.6
 probability_test <- 1 - probability_train
 
-# 70% Training and 30% Validation
+# Training and Validation Set Splitting
 sample <- sample(c(TRUE, FALSE), nrow(ToyotaDT_NN), replace=TRUE, prob=c(probability_train,probability_test))
 Train_NN  <- ToyotaDT_NN[sample, ]
 Test_NN   <- ToyotaDT_NN[!sample, ]
+
+# Proportions Check
+Prop_Training <- nrow(Train_NN)/nrow(ToyotaDT_NN)*100
+Prop_Validation <- nrow(Test_NN)/nrow(ToyotaDT_NN)*100
 
 # Preprocess Variables - 8 Dummies - Fuel Type to Dummy - 7 Numerical
 
@@ -394,7 +405,7 @@ Train_NN <- cbind(Train_NN[,-c("Fuel_Type")], Fuel_Type[,])
 ## replace Fuel_Type column with 2 dummies
 Test_NN <- cbind(Test_NN[,-c("Fuel_Type")], Fuel_Type[,])
 
-## Numerical 
+## Numerical Processing with Training Set
 preProcValues <- preProcess(Train_NN[,c("Price","Age_08_04","KM","HP","Doors","Quarterly_Tax","Guarantee_Period")], method = "range")
 
 ## Preprocess the Training Set
@@ -403,10 +414,14 @@ Train_NN_Preprocess <- predict(preProcValues, Train_NN)
 ## Preprocess the Test Set
 Test_NN_Preprocess <- predict(preProcValues, Test_NN)
 
+# Print Proportions
+
+print(paste(round(Prop_Training,2),"% In Training", round(Prop_Validation,2),"% In Validation"))
+
 ```
 
 
-### Neural Network - 1 Hidden Layers with 2 Nodes 
+### Neural Network A - 1 Hidden Layers with 2 Nodes 
 
 
 <center>
@@ -416,22 +431,27 @@ Test_NN_Preprocess <- predict(preProcValues, Test_NN)
 # Reproducible Results
 set.seed(1)
 
-nn <- neuralnet(Price ~ ., data = Train_NN_Preprocess, linear.output = T, hidden = 2)
+nn_1 <- neuralnet(Price ~ ., data = Train_NN_Preprocess, linear.output = T, hidden = 2)
 
-plot(nn, rep="best")
+plot(nn_1, rep="best")
 
 ```
 
-### Weights of the Neural Network
+</center>
 
-```{r neural weights}
+
+### Weights of the Neural Network A
+
+```{r neural weights A}
 
 # display weights
-nn$weights
+nn_1$weights
 
 ```
 
-### Neural Network - 1 Hidden Layers with 5 Nodes 
+### Neural Network B - 1 Hidden Layers with 5 Nodes 
+
+<center>
 
 ```{r neural plot B}
 
@@ -444,16 +464,20 @@ plot(nn_2, rep="best")
 
 ```
 
-### Weights of the Neural Network
+</center>
 
-```{r neural weights}
+### Weights of the Neural Network B
+
+```{r neural weights B}
 
 # display weights
 nn_2$weights
 
 ```
 
-### Neural Network - 2 Hidden Layers with 5 Nodes in each
+### Neural Network C - 2 Hidden Layers with 5 Nodes in each
+
+<center>
 
 ```{r neural plot C}
 
@@ -465,10 +489,12 @@ nn_3 <- neuralnet(Price ~ ., data = Train_NN_Preprocess, linear.output = T, hidd
 plot(nn_3, rep="best")
 
 ```
+</center>
 
-### Weights of the Neural Network
 
-```{r neural weights}
+### Weights of the Neural Network C
+
+```{r neural weights C}
 
 # display weights
 nn_3$weights
@@ -476,11 +502,11 @@ nn_3$weights
 ```
 
 
-</center>
-
 ### Predictions and RMSE
 
-### RMSE For Training Set
+#### RMSE For Training Set
+
+<center>
 
 ```{r predictions and RMSE for Training Set}
 
@@ -489,7 +515,7 @@ nn_3$weights
 # Predictions for Training -----------------------------------
 
 # Predictions with nn
-Train_Prediction_nn <- predict(nn,Train_NN_Preprocess)
+Train_Prediction_nn_1 <- predict(nn_1,Train_NN_Preprocess)
 
 # Predictions with nn_2
 Train_Prediction_nn_2 <- predict(nn_2,Train_NN_Preprocess)
@@ -500,7 +526,7 @@ Train_Prediction_nn_3 <- predict(nn_3,Train_NN_Preprocess)
 # Back transform to Original Scale ---------------------------
 
 # Predictions with nn
-Train_Prediction_nn <- Train_Prediction_nn*(max(Train_NN$Price)-min(Train_NN$Price))+min(Train_NN$Price)
+Train_Prediction_nn_1 <- Train_Prediction_nn_1*(max(Train_NN$Price)-min(Train_NN$Price))+min(Train_NN$Price)
 
 # Predictions with nn_2
 Train_Prediction_nn_2 <- Train_Prediction_nn_2*(max(Train_NN$Price)-min(Train_NN$Price))+min(Train_NN$Price)
@@ -510,11 +536,11 @@ Train_Prediction_nn_3 <- Train_Prediction_nn_3*(max(Train_NN$Price)-min(Train_NN
 
 # RMSE for Train  -------------------------------------------------------
 
-RMSE_Train_Prediction_nn <- RMSE(Train_Prediction_nn,Train_NN$Price)
+RMSE_Train_Prediction_nn_1 <- RMSE(Train_Prediction_nn_1,Train_NN$Price)
 RMSE_Train_Prediction_nn_2 <- RMSE(Train_Prediction_nn_2,Train_NN$Price)
 RMSE_Train_Prediction_nn_3 <- RMSE(Train_Prediction_nn_3,Train_NN$Price)
 
-RMSE <- c(RMSE_Train_Prediction_nn,RMSE_Train_Prediction_nn_2,RMSE_Train_Prediction_nn_3)
+RMSE <- c(RMSE_Train_Prediction_nn_1,RMSE_Train_Prediction_nn_2,RMSE_Train_Prediction_nn_3)
 
 # Rounding RMSE
 RMSE <- round(RMSE,2)
@@ -531,16 +557,20 @@ RMSE_DATA <- flextable(Frame_RMSE) %>% fontsize(size = 8, part = "all")
 
 ```
 
+</center>
+
 > The more we add nodes and hidden layers to our neural network, less RMSE we tend to have. That would signify that our model C is fitting more and more the training set instead of the model A.
 
-### RMSE For Validation Set
+#### RMSE For Validation Set
+
+<center>
 
 ```{r predictions and RMSE for Validation Set}
 
 # Predictions for Validation --------------------------------
 
 # Predictions with nn
-Validation_Prediction_nn <- predict(nn,Test_NN_Preprocess)
+Validation_Prediction_nn_1 <- predict(nn_1,Test_NN_Preprocess)
 
 # Predictions with nn_2
 Validation_Prediction_nn_2 <- predict(nn_2,Test_NN_Preprocess)
@@ -551,17 +581,17 @@ Validation_Prediction_nn_3 <- predict(nn_3,Test_NN_Preprocess)
 # Back transform to Original Scale ---------------------------
 
 # Predictions with nn
-Validation_Prediction_nn <- Validation_Prediction_nn*(max(Test_NN$Price)-min(Test_NN$Price))+min(Test_NN$Price)
+Validation_Prediction_nn_1 <- Validation_Prediction_nn_1*(max(Train_NN$Price)-min(Train_NN$Price))+min(Train_NN$Price)
 
 # Predictions with nn_2
-Validation_Prediction_nn_2 <- Validation_Prediction_nn_2*(max(Test_NN$Price)-min(Test_NN$Price))+min(Test_NN$Price)
+Validation_Prediction_nn_2 <- Validation_Prediction_nn_2*(max(Train_NN$Price)-min(Train_NN$Price))+min(Train_NN$Price)
 
 # Predictions with nn_3
-Validation_Prediction_nn_3 <- Validation_Prediction_nn_3*(max(Test_NN$Price)-min(Test_NN$Price))+min(Test_NN$Price)
+Validation_Prediction_nn_3 <- Validation_Prediction_nn_3*(max(Train_NN$Price)-min(Train_NN$Price))+min(Train_NN$Price)
 
 # RMSE for Validation  -------------------------------------------------------
 
-RMSE_Validation_Prediction_1 <- RMSE(Validation_Prediction_nn, Test_NN$Price)
+RMSE_Validation_Prediction_1 <- RMSE(Validation_Prediction_nn_1, Test_NN$Price)
 RMSE_Validation_Prediction_2 <- RMSE(Validation_Prediction_nn_2, Test_NN$Price)
 RMSE_Validation_Prediction_3 <- RMSE(Validation_Prediction_nn_3, Test_NN$Price)
 
@@ -583,15 +613,19 @@ RMSE_VALIDATION_DATA <- set_header_labels(RMSE_VALIDATION_DATA, RMSE_Validation 
 
 ```
 
+</center>
 
 #### i. What happens to the RMS error for the training data as the number of layers and nodes increases ?
 
+> RMSE tend to decrease the more when complexify our neural network (Model C in that case). This indicates we are overfitting more and more our model to the training dataset. 
+
 #### ii. What happens to the RMS error for the validation data?
+
+> The RMSE for the Validation Data is lower for the Neural Model B, and then it increases with the model C. 
 
 #### iii. Comment on the appropriate number of layers and nodes for this application. 
 
-
-
+> Model A and B are close, but Model A is not in a overfitting situation, we should decide wether we prefer good predictions with Model B and more overfitting to the training dataset, or Model A which give less accurate result but with more stability in future predictions since it is not overfitting such as Model C. In this case, I would prefer the Model B giving more accurate results but more prone to instability, thus choosing 1 Hidden Layers with 5 Nodes. 
 
 
 # <span style="color: #1c6155;">References</span>
