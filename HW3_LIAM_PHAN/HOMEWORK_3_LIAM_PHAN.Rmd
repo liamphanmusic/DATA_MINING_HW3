@@ -501,6 +501,12 @@ RMSE_Prediction_1 <- RMSE(Prediction_nn, Test_NN$Price)
 RMSE_Prediction_2 <- RMSE(Prediction_nn_2, Test_NN$Price)
 RMSE_Prediction_3 <- RMSE(Prediction_nn_3, Test_NN$Price)
 
+Column_RMSE <- c(RMSE_Prediction_1,RMSE_Prediction_2,RMSE_Prediction_3)
+
+Frame_RMSE <- as.data.frame(Column_RMSE)
+
+
+
 ```
 
 #### i. What happens to the RMS error for the training data as the number of layers and nodes increases ?
