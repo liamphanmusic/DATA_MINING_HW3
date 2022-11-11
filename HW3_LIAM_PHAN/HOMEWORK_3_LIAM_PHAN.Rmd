@@ -356,7 +356,39 @@ rm(list = ls())
 
 ## Data Preprocessing - 60% Training and 40% Validation 
 
+```{r Data Preprocessing}
+
+ToyotaDT_TREE <- fread("DATA/ToyotaCorolla.csv")
+
+# Input Cutting Ratio
+Prob_Train <- 0.6
+Prob_Validation <- 1 - Prob_Train
+
+# Training and Validation Set Splitting
+sample <- sample(c(TRUE, FALSE), nrow(ToyotaDT_TREE), replace=TRUE, prob=c(Prob_Train,Prob_Validation))
+Training_TREE  <- ToyotaDT_TREE[sample, ]
+Validation_TREE   <- ToyotaDT_TREE[!sample, ]
+
+# Proportions Check
+Prop_Train <- nrow(Training_TREE)/nrow(ToyotaDT_TREE)*100
+Prop_Valid <- nrow(Validation_TREE)/nrow(ToyotaDT_TREE)*100
+
+# Printing Proportions for double checking
+print(paste(round(Prop_Train,2),"% In Training", round(Prop_Valid,2),"% In Validation"))
+
+```
+
 ## a. Run a Regression Tree
+
+```{r Regression Tree}
+
+
+
+
+
+
+```
+
 
 ### i. Which appear to be the three or four most important car specifications for predicting the car's price? 
 
@@ -368,6 +400,7 @@ rm(list = ls())
 
 
 ### iv. Prune the full tree using the cross-validation error. Compared to the full tree, what is the predictive performance for the validation set?
+
 
 ## b. Price Variable into Categorical Variable
 
