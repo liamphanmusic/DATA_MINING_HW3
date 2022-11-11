@@ -402,6 +402,9 @@ Train_NN_Preprocess <- predict(preProcValues, Train_NN)
 
 ### Neural Network - 1 Hidden Layers with 2 Nodes 
 
+
+<center>
+
 ```{r neural plot}
 
 nn <- neuralnet(Price ~ ., data = Train_NN_Preprocess, linear.output = T, hidden = 2)
@@ -456,6 +459,9 @@ plot(nn_3, rep="best")
 nn_3$weights
 
 ```
+
+
+</center>
 
 ### Predictions and Cross Validation
 
