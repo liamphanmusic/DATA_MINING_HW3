@@ -345,6 +345,45 @@ hist(all.residuals, breaks = 25, xlab = "Residuals", main = "", col = "#1c6155")
 
 # <span style="color: #1c6155;">Ex 9.3</span> 
 
+```{r clean environment 1.1, include=FALSE}
+
+# Clean Environment
+rm(list = ls()) 
+
+```
+
+## Predicting Prices of Used Cars (Regression Trees). 
+
+## Data Preprocessing - 60% Training and 40% Validation 
+
+## a. Run a Regression Tree
+
+### i. Which appear to be the three or four most important car specifications for predicting the car's price? 
+
+
+### ii. RMS Error between Training and Validation
+
+
+### iii. How can we achieve predictions for the training set that are not equal to the actual prices? 
+
+
+### iv. Prune the full tree using the cross-validation error. Compared to the full tree, what is the predictive performance for the validation set?
+
+## b. Price Variable into Categorical Variable
+
+### i. Compare CT and RT. Are they different? Structure, Top Predictors, Size of tree, etc.) Why? 
+
+### ii. Predict the price, using the RT and the CT, of a used Toyota Corolla with the following specifications. 
+
+<center>
+
+![](IMAGES/Table 2.png)
+</center>
+
+### iii. 
+
+
+
 # <span style="color: #1c6155;">Ex 11.3</span> 
 
 ```{r clean environment 2, include=FALSE}
