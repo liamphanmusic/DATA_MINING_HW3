@@ -559,8 +559,6 @@ RMSE_DATA <- flextable(Frame_RMSE) %>% fontsize(size = 8, part = "all")
 
 </center>
 
-> The more we add nodes and hidden layers to our neural network, less RMSE we tend to have. That would signify that our model C is fitting more and more the training set instead of the model A.
-
 #### RMSE For Validation Set
 
 <center>
