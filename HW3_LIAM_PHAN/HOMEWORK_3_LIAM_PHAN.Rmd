@@ -391,11 +391,17 @@ Fuel_Type <- as.data.frame(model.matrix(~ 0 + Fuel_Type, data=Train_NN))
 ## replace Fuel_Type column with 2 dummies
 Train_NN <- cbind(Train_NN[,-c("Fuel_Type")], Fuel_Type[,])
 
+## replace Fuel_Type column with 2 dummies
+Test_NN <- cbind(Test_NN[,-c("Fuel_Type")], Fuel_Type[,])
+
 ## Numerical 
 preProcValues <- preProcess(Train_NN[,c("Price","Age_08_04","KM","HP","Doors","Quarterly_Tax","Guarantee_Period")], method = "range")
 
 ## Preprocess the Training Set
 Train_NN_Preprocess <- predict(preProcValues, Train_NN)
+
+## Preprocess the Test Set
+Test_NN_Preprocess <- predict(preProcValues, Test_NN)
 
 ```
 
@@ -467,11 +473,33 @@ nn_3$weights
 
 ```{r predictions}
 
+# Preprocess Scale - Range Method ----------------------------
+
 # Predictions with nn
-Predictions_nn <- predict(nn, Train_NN_Preprocess)
+Prediction_nn <- predict(nn,Test_NN_Preprocess)
 
+# Predictions with nn_2
+Prediction_nn_2 <- predict(nn_2,Test_NN_Preprocess)
 
-#
+# Predictions with nn_3
+Prediction_nn_3 <- predict(nn_3,Test_NN_Preprocess)
+
+# Back transform to Original Scale ---------------------------
+
+# Predictions with nn
+Prediction_nn <- Prediction_nn*(max(Test_NN$Price)-min(Test_NN$Price))+min(Test_NN$Price)
+
+# Predictions with nn_2
+Prediction_nn_2 <- Prediction_nn_2*(max(Test_NN$Price)-min(Test_NN$Price))+min(Test_NN$Price)
+
+# Predictions with nn_3
+Prediction_nn_3 <- Prediction_nn_3*(max(Test_NN$Price)-min(Test_NN$Price))+min(Test_NN$Price)
+
+# RMS -------------------------------------------------------
+
+RMSE_Prediction_1 <- RMSE(Prediction_nn, Test_NN$Price)
+RMSE_Prediction_2 <- RMSE(Prediction_nn_2, Test_NN$Price)
+RMSE_Prediction_3 <- RMSE(Prediction_nn_3, Test_NN$Price)
 
 ```
 
