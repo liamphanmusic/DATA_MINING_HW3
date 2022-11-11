@@ -356,25 +356,126 @@ The Goal is to predict the price of a used Toyota Corolla based on its specifica
 Use predictors **Age_08_04**, **KM**, **Fuel_Type**, **HP**, **Automatic**, **Doors**, **Quarterly_Tax**, **Mfr_Guarantee**, **Guarantee_Period**, **Airco**, **Automatic_airco**, **CD_Player**, **Powered_Windows**, **Sport_Model**, and **Tow_Bar**.
 
 
+### On our Training Set
+
 ```{r neural network}
 
+# Reproducible Results
+set.seed(1)
+
+# required Packages
 library(neuralnet)
 library(nnet)
 library(caret)
 
+# Load the Dataset with Fread()
+ToyotaDT_NN <- fread("DATA/ToyotaCorolla.csv")
 
+# Select the 15 variables 
+ToyotaDT_NN <- ToyotaDT_NN[,c("Price","Age_08_04","KM","Fuel_Type","HP","Automatic","Doors","Quarterly_Tax","Mfr_Guarantee","Guarantee_Period","Airco","Automatic_airco","CD_Player","Powered_Windows","Sport_Model","Tow_Bar")]
+
+# Input Cutting Ratio
+probability_train <- 0.7
+probability_test <- 1 - probability_train
+
+# 70% Training and 30% Validation
+sample <- sample(c(TRUE, FALSE), nrow(ToyotaDT_NN), replace=TRUE, prob=c(probability_train,probability_test))
+Train_NN  <- ToyotaDT_NN[sample, ]
+Test_NN   <- ToyotaDT_NN[!sample, ]
+
+# Preprocess Variables - 8 Dummies - Fuel Type to Dummy - 7 Numerical
+
+## create dummies for fuel type
+Fuel_Type <- as.data.frame(model.matrix(~ 0 + Fuel_Type, data=Train_NN))
+
+## replace Fuel_Type column with 2 dummies
+Train_NN <- cbind(Train_NN[,-c("Fuel_Type")], Fuel_Type[,])
+
+## Numerical 
+preProcValues <- preProcess(Train_NN[,c("Price","Age_08_04","KM","HP","Doors","Quarterly_Tax","Guarantee_Period")], method = "range")
+
+## Preprocess the Training Set
+Train_NN_Preprocess <- predict(preProcValues, Train_NN)
 
 ```
 
 
+### Neural Network - 1 Hidden Layers with 2 Nodes 
+
+```{r neural plot}
+
+nn <- neuralnet(Price ~ ., data = Train_NN_Preprocess, linear.output = T, hidden = 2)
+
+plot(nn, rep="best")
+
+```
+
+### Weights of the Neural Network
+
+```{r neural weights}
+
+# display weights
+nn$weights
+
+```
+
+### Neural Network - 1 Hidden Layers with 5 Nodes 
+
+```{r neural plot 2}
+
+nn_2 <- neuralnet(Price ~ ., data = Train_NN_Preprocess, linear.output = T, hidden = 5)
+
+plot(nn_2, rep="best")
+
+```
+
+### Weights of the Neural Network
+
+```{r neural weights}
+
+# display weights
+nn_2$weights
+
+```
+
+### Neural Network - 2 Hidden Layers with 5 Nodes in each
+
+```{r neural plot 3}
+
+nn_3 <- neuralnet(Price ~ ., data = Train_NN_Preprocess, linear.output = T, hidden = c(5,5))
+
+plot(nn_3, rep="best")
+
+```
+
+### Weights of the Neural Network
+
+```{r neural weights}
+
+# display weights
+nn_3$weights
+
+```
+
+### Predictions and Cross Validation
+
+```{r predictions}
+
+# Predictions with nn
+Predictions_nn <- predict(nn, Train_NN_Preprocess)
 
 
+#
+
+```
 
 #### i. What happens to the RMS error for the training data as the number of layers and nodes increases ?
 
 #### ii. What happens to the RMS error for the validation data?
 
 #### iii. Comment on the appropriate number of layers and nodes for this application. 
+
+
 
 
 
@@ -386,3 +487,6 @@ library(caret)
 
 [Summarytools in R Markdown Documents](https://cran.r-project.org/web/packages/summarytools/vignettes/rmarkdown.html)
 
+[Data Science Plus - Fitting Neural Network in R](https://datascienceplus.com/fitting-neural-network-in-r/)
+
+[Backtransform with the Caret Package and Preprocess() Function](https://www.tradersinsight.news/ibkr-quant-news/r-code-back-transform-from-carets-preprocess/)
