@@ -439,7 +439,7 @@ plotcp(Tree_1)
 
 ### i. Which appear to be the three or four most important car specifications for predicting the car's price? 
 
-<center>
+
 
 ```{r Specifications for Predictions}
 
@@ -452,7 +452,6 @@ DT::datatable(Tree_1_Importance)
 
 ```
 
-</center>
 
 
 > Using our Regression Tree output, we can see that the first 4 split are based on Age only. Then the 4 most important variables are **Age_08_04**, **KM**, **Quarterly_Tax** and **HP**.
