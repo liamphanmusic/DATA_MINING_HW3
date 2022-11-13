@@ -52,6 +52,9 @@ library(leaps) # Exhaustive Search
 library(forecast) # Predictions
 library(neuralnet) # Neural Network
 library(nnet) # Neural Network
+library(manipulateWidget) # Plotly Combiner
+library(rpart) # Regression Tree
+library(rpart.plot) # Plotting Regression Tree
 
 ```
 
@@ -385,6 +388,8 @@ print(paste(round(Prop_Train,2),"% In Training", round(Prop_Valid,2),"% In Valid
 
 with CP=0.001 and "ANOVA" Method
 
+<center>
+
 ```{r Regression Tree}
 
 # Set Seed
@@ -416,8 +421,12 @@ print(paste("There is", Length_Tree_1,"Number of Leaves"))
 
 ```
 
+</center>
+
 
 ### CP Plot
+
+<center>
 
 ```{r size of tree 1}
 
@@ -426,9 +435,13 @@ plotcp(Tree_1)
 
 ```
 
+</center>
+
 > With small CP, Our Regression Tree can go until 31 Leaves... But we see that the relative error seems to already be small enough between 9 and 13 Leaves. 
 
 ### i. Which appear to be the three or four most important car specifications for predicting the car's price? 
+
+<center>
 
 ```{r Specifications for Predictions}
 
@@ -441,10 +454,15 @@ DT::datatable(Tree_1_Importance)
 
 ```
 
+</center>
+
+
 > Using our Regression Tree output, we can see that the first 4 split are based on Age only. Then the 4 most important variables are **Age_08_04**, **KM**, **Quarterly_Tax** and **HP**.
 
 
 ### ii. RMS Error between Training and Validation
+
+<center>
 
 ```{r RMS Error Training and Validation}
 
@@ -469,7 +487,11 @@ flextable(RMSE_Dataframe) %>% set_header_labels(RMSE_Dataframe, values = list(RM
 
 ```
 
+</center>
+
 ### Computing Residuals Boxplots
+
+<center>
 
 ```{r residuals Tree 1}
 # Computing Residuals --------------------------------------------------------------
@@ -484,26 +506,27 @@ Residuals_Validation_Tree_1 <- as.data.frame(Residuals_Validation_Tree_1)
 library(ggplot2)
 
 # Boxplot Training
-box1 <- ggplot(Residuals_Training_Tree_1) +
+box1 <- ggplotly(ggplot(Residuals_Training_Tree_1) +
  aes(x = "", y = Residuals_Training_Tree_1) +
  geom_boxplot(fill = "#1c6155") +
- labs(x = "", y = "Price Residuals", title = "Residuals Between Training and Predicted", subtitle = "Boxplot", 
+ labs(x = "with 882 observations", y = "Price Residuals", title = "Residuals Between Training and Predicted", subtitle = "Boxplot", 
  caption = "") +
- theme_minimal() + ylim(-10000, 10000) + theme(text = element_text(size = 8))    
+ theme_minimal() + ylim(-10000, 10000) + theme(text = element_text(size = 8)))
 
 # Boxplot Validation
-box2 <- ggplot(Residuals_Validation_Tree_1) +
+box2 <- ggplotly(ggplot(Residuals_Validation_Tree_1) +
  aes(x = "", y = Residuals_Validation_Tree_1) +
  geom_boxplot(fill = "#1c6155") +
- labs(x = "", y = "Price Residuals", title = "Residuals Between Validation and Predicted", subtitle = "Boxplot", 
+ labs(x = "with 554 observations", y = "Price Residuals", title = "Residuals Between Validation and Predicted", subtitle = "Boxplot", 
  caption = "") +
- theme_minimal() + ylim(-10000, 10000) + theme(text = element_text(size = 8))    
+ theme_minimal() + ylim(-10000, 10000) + theme(text = element_text(size = 8)))
 
 # Combine them
-grid.arrange(box1,box2, ncol=2)
+combineWidgets(box1,box2, ncol=2)
 
 ```
 
+</center>
 
 ### iii. How can we achieve predictions for the training set that are not equal to the actual prices? 
 
@@ -514,29 +537,92 @@ grid.arrange(box1,box2, ncol=2)
 ### iv. Prune the full tree using the cross-validation error. Compared to the full tree, what is the predictive performance for the validation set?
 
 
+**CP** Table of our full Tree Regression - **CP**=0
+
+```{r cp table}
+
+cp_2 = 0
+
+Tree_Full <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE, control = rpart.control(maxdepth = maxdepth, cp=cp_2,minbucket = minbucket, method=method))
+
+Tree_Full$cptable
+
+```
+
+
+### Smallest X-Error and CP related
+
+```{r smallest x-error}
+
+(best_CP <- Tree_Full$cptable[which.min(Tree_Full$cptable[, "xerror"]), "CP"])
+
+```
+> Now we compute our prunning with this CP value on our Full Tree Regression
+
+### Prune Tree with optimal CP
+
 ```{r pruning full tree}
 
+Pruned_Tree <- prune(Tree_Full, cp = best_CP)
+
+# Plotting Pruned Tree
+prp(Pruned_Tree,type = 1, extra = 1, under = TRUE, split.font = 1, varlen = -10,box.col=ifelse(Pruned_Tree$frame$var == "<leaf>", 'gray', 'white'))
+
+# Number of Leafs
+Length_Tree_Pruned = length(Pruned_Tree$frame$var[Pruned_Tree$frame$var == "<leaf>"])
+
+print(paste("There is", Length_Tree_Pruned,"Number of Leaves"))
+
+```
+
+### Predictions Accuracy on Validation Set with Prune Tree
+
+<center>
+
+```{r Predictions Accuracy Validation Prune Tree}
+
+
+Predictions_Full_Tree <- predict(Tree_Full, Validation_TREE)
+Predictions_Prune_Tree <- predict(Pruned_Tree, Validation_TREE)
+
+RMSE_Full_Tree <- RMSE(Validation_TREE$Price, Predictions_Full_Tree)
+RMSE_Prune_Tree <- RMSE(Validation_TREE$Price, Predictions_Prune_Tree)
+
+RMSE_Full_Tree_2 <- cbind(RMSE_Full_Tree,RMSE_Prune_Tree,RMSE_Validation)
+
+RMSE_Full_Tree_2 <- as.data.frame(RMSE_Full_Tree_2)
+
+flextable(RMSE_Full_Tree_2) %>% set_header_labels(RMSE_Full_Tree_2,RMSE_Full_Tree="RMSE Validation - Full Tree with CP=0",RMSE_Prune_Tree="RMSE Validation - Prune Tree with CP=0.0008", RMSE_Validation="RMSE Validation - First Tree with CP=0.001")
+
+```
+
+</center>
+
+> We can see that Prunning our Regression Tree helped us getting a smaller RMSE compared to the Full Tree, but with have slightly higher RMSE compared to the Regression Tree asked in the first questions with CP=0.001. 
+
+## b. Price Variable into Categorical Variable
+
+
+
+### i. Compare CT and RT. Are they different? (Structure, Top Predictors, Size of tree, etc.) Why? 
+
+### ii. Predict the price, using the RT and the CT, of a used Toyota Corolla with the following specifications. 
+
+<center> 
+
+![](IMAGES/Table 2.png)
+</center>
+
+### iii. Compare the predictions in terms of the predictors that were used, the magnitude of the difference between the two predictions, and the advantages and disadvantages of the two methods. 
+
+
+```{r aggawga}
 
 
 
 
 
 ```
-
-
-
-## b. Price Variable into Categorical Variable
-
-### i. Compare CT and RT. Are they different? Structure, Top Predictors, Size of tree, etc.) Why? 
-
-### ii. Predict the price, using the RT and the CT, of a used Toyota Corolla with the following specifications. 
-
-<center>
-
-![](IMAGES/Table 2.png)
-</center>
-
-### iii. 
 
 
 
@@ -833,4 +919,6 @@ RMSE_VALIDATION_DATA <- set_header_labels(RMSE_VALIDATION_DATA, RMSE_Validation 
 
 [Backtransform with the Caret Package and Preprocess() Function](https://www.tradersinsight.news/ibkr-quant-news/r-code-back-transform-from-carets-preprocess/)
 
-[Regression Trees Github Tutorial]()
+[Regression Trees Github Tutorial](https://uc-r.github.io/regression_trees)
+
+[Regression Trees Pruning Github Tutorial](https://ubc-stat.github.io/stat-406-worksheets/pruning-regression-trees-with-rpart.html)
