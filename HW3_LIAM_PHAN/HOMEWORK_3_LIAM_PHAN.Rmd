@@ -410,7 +410,7 @@ maxdepth = 30 #30 maximum
 Tree_1 <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE, control = rpart.control(maxdepth = maxdepth, cp=cp_1,minbucket = minbucket, method=method))
 
 # Plotting Regression Tree
-prp(Tree_1,type = 1, extra = 1, under = TRUE, split.font = 1, varlen = -10,box.col=ifelse(Tree_1$frame$var == "<leaf>", 'gray', 'white'))
+Tree_1_Plot <- rpart.plot(Tree_1, type=0, varlen = 0, box.col=ifelse(Tree_1$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE, tweak = 0.7)
 
 # Number of Leafs
 Length_Tree_1 = length(Tree_1$frame$var[Tree_1$frame$var == "<leaf>"])
@@ -506,7 +506,7 @@ library(ggplot2)
 box1 <- ggplotly(ggplot(Residuals_Training_Tree_1) +
  aes(x = "", y = Residuals_Training_Tree_1) +
  geom_boxplot(fill = "#1c6155") +
- labs(x = "with 882 observations", y = "Price Residuals", title = "Residuals Between Training and Predicted", subtitle = "Boxplot", 
+ labs(x = "with 882 observations", y = "Price Residuals", title = "Residuals Training VS Predicted", subtitle = "Boxplot", 
  caption = "") +
  theme_minimal() + ylim(-10000, 10000) + theme(text = element_text(size = 8)))
 
@@ -514,7 +514,7 @@ box1 <- ggplotly(ggplot(Residuals_Training_Tree_1) +
 box2 <- ggplotly(ggplot(Residuals_Validation_Tree_1) +
  aes(x = "", y = Residuals_Validation_Tree_1) +
  geom_boxplot(fill = "#1c6155") +
- labs(x = "with 554 observations", y = "Price Residuals", title = "Residuals Between Validation and Predicted", subtitle = "Boxplot", 
+ labs(x = "with 554 observations", y = "Price Residuals", title = "Residuals Validation VS Predicted", subtitle = "Boxplot", 
  caption = "") +
  theme_minimal() + ylim(-10000, 10000) + theme(text = element_text(size = 8)))
 
@@ -528,13 +528,13 @@ combineWidgets(box1,box2, ncol=2)
 ### iii. How can we achieve predictions for the training set that are not equal to the actual prices? 
 
 
-
+> blablababla
 
 
 ### iv. Prune the full tree using the cross-validation error. Compared to the full tree, what is the predictive performance for the validation set?
 
 
-**CP** Table of our full Tree Regression - **CP**=0
+CP Table of our full Tree Regression (**CP**=0)
 
 ```{r cp table}
 
@@ -542,7 +542,7 @@ cp_2 = 0
 
 Tree_Full <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE, control = rpart.control(maxdepth = maxdepth, cp=cp_2,minbucket = minbucket, method=method))
 
-Tree_Full$cptable
+DT::datatable(Tree_Full$cptable)
 
 ```
 
@@ -556,14 +556,16 @@ Tree_Full$cptable
 ```
 > Now we compute our prunning with this CP value on our Full Tree Regression
 
-### Prune Tree with optimal CP
+### Prune Tree with optimal 
+
+<center>
 
 ```{r pruning full tree}
 
 Pruned_Tree <- prune(Tree_Full, cp = best_CP)
 
 # Plotting Pruned Tree
-prp(Pruned_Tree,type = 1, extra = 1, under = TRUE, split.font = 1, varlen = -10,box.col=ifelse(Pruned_Tree$frame$var == "<leaf>", 'gray', 'white'))
+Pruned_Tree_Plot <- rpart.plot(Pruned_Tree, type=0, varlen = 0, box.col=ifelse(Pruned_Tree$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE, tweak = 0.7)
 
 # Number of Leafs
 Length_Tree_Pruned = length(Pruned_Tree$frame$var[Pruned_Tree$frame$var == "<leaf>"])
@@ -571,6 +573,8 @@ Length_Tree_Pruned = length(Pruned_Tree$frame$var[Pruned_Tree$frame$var == "<lea
 print(paste("There is", Length_Tree_Pruned,"Number of Leaves"))
 
 ```
+
+</center>
 
 ### Predictions Accuracy on Validation Set with Prune Tree
 
@@ -704,12 +708,16 @@ DT::datatable(Predicted_Car_Price)
 
 ### iii. Compare the predictions in terms of the predictors that were used, the magnitude of the difference between the two predictions, and the advantages and disadvantages of the two methods. 
 
+<center>
 
 ```{r Magnitude}
 
 CT_Tree_Plot <- rpart.plot(CT_Tree, type=0, varlen = 0, box.col=ifelse(CT_Tree$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE, tweak = 0.8)
 
 ```
+
+</center>
+
 
 > By using the CT Tree, we first start with **Age_08_04** >= 57 -> *Yes*, then **Age_08_04** >=70 -> *Yes*, then **KM** >= *174000* -> *No* and we stop at (7.16e+03,8.57e+03] which is 53.57% probability for this specific car. We are using far less steps to get to our predictions compared to the Regression Tree. By using CT instead of RT, we are not getting an exact value of price, but instead a probability distribution of the different Price Bins our car could be in and thus selecting the highest probability would get our car's price into a category. CT have less precisions in outcome predictions but have far less branches and terminal nodes, thus more easy for reading and understanding each variables importance in the prediction process, as well as giving probabilities, which can be useful depending on the context.   
 
