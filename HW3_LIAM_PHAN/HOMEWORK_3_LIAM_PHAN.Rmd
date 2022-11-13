@@ -87,7 +87,7 @@ ToyotaDT <- fread("DATA/ToyotaCorolla.csv")
 ```{r preview of dataset}
 
 # Preview of the Dataset
-DT::datatable(head(ToyotaDT))
+DT::datatable(head(ToyotaDT,2))
 
 ```
 
