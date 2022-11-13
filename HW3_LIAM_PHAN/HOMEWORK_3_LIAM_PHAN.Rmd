@@ -410,7 +410,7 @@ maxdepth = 30 #30 maximum
 Tree_1 <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE, control = rpart.control(maxdepth = maxdepth, cp=cp_1,minbucket = minbucket, method=method))
 
 # Plotting Regression Tree
-Tree_1_Plot <- rpart.plot(Tree_1, type=0, varlen = 0, box.col=ifelse(Tree_1$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE, tweak = 0.7)
+Tree_1_Plot <- rpart.plot(Tree_1, type=0, varlen = 0, box.col=ifelse(Tree_1$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE)
 
 # Number of Leafs
 Length_Tree_1 = length(Tree_1$frame$var[Tree_1$frame$var == "<leaf>"])
@@ -463,6 +463,9 @@ DT::datatable(Tree_1_Importance)
 
 ```{r RMS Error Training and Validation}
 
+# Set Seed 
+set.seed(1)
+
 # Predictions of Training and Validation
 Training_Predictions <- predict(Tree_1,Training_TREE)
 Validation_Predictions <- predict(Tree_1, Validation_TREE)
@@ -491,6 +494,10 @@ flextable(RMSE_Dataframe) %>% set_header_labels(RMSE_Dataframe, values = list(RM
 <center>
 
 ```{r residuals Tree 1}
+
+# Set Seed 
+set.seed(1)
+
 # Computing Residuals --------------------------------------------------------------
 Residuals_Training_Tree_1 <- Training_TREE$Price - Training_Predictions
 Residuals_Validation_Tree_1 <- Validation_TREE$Price - Validation_Predictions
@@ -534,13 +541,16 @@ combineWidgets(box1,box2, ncol=2)
 ### iv. Prune the full tree using the cross-validation error. Compared to the full tree, what is the predictive performance for the validation set?
 
 
-CP Table of our full Tree Regression (**CP**=0)
+CP Table of our full Tree Regression (**CP**=0.001)
 
 ```{r cp table}
 
-cp_2 = 0
+# Set Seed 
+set.seed(1)
 
-Tree_Full <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE, control = rpart.control(maxdepth = maxdepth, cp=cp_2,minbucket = minbucket, method=method))
+cp_2 = 0.001
+
+Tree_Full <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE, control = rpart.control(maxdepth = maxdepth, cp=cp_2, minbucket = minbucket, method=method))
 
 DT::datatable(Tree_Full$cptable)
 
@@ -550,6 +560,10 @@ DT::datatable(Tree_Full$cptable)
 ### Smallest X-Error and CP related
 
 ```{r smallest x-error}
+
+# Set Seed 
+set.seed(1)
+
 
 (best_CP <- Tree_Full$cptable[which.min(Tree_Full$cptable[, "xerror"]), "CP"])
 
@@ -565,7 +579,7 @@ DT::datatable(Tree_Full$cptable)
 Pruned_Tree <- prune(Tree_Full, cp = best_CP)
 
 # Plotting Pruned Tree
-Pruned_Tree_Plot <- rpart.plot(Pruned_Tree, type=0, varlen = 0, box.col=ifelse(Pruned_Tree$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE, tweak = 0.7)
+Pruned_Tree_Plot <- rpart.plot(Pruned_Tree, type=0, varlen = 0, box.col=ifelse(Pruned_Tree$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE)
 
 # Number of Leafs
 Length_Tree_Pruned = length(Pruned_Tree$frame$var[Pruned_Tree$frame$var == "<leaf>"])
@@ -591,17 +605,17 @@ RMSE_Full_Tree <- RMSE(Validation_TREE$Price, Predictions_Full_Tree)
 RMSE_Prune_Tree <- RMSE(Validation_TREE$Price, Predictions_Prune_Tree)
 
 # Data frame RMSE
-RMSE_Full_Tree_2 <- cbind(RMSE_Full_Tree,RMSE_Prune_Tree,RMSE_Validation)
+RMSE_Full_Tree_2 <- cbind(RMSE_Prune_Tree,RMSE_Validation)
 RMSE_Full_Tree_2 <- as.data.frame(RMSE_Full_Tree_2)
 
 # Printing Table
-flextable(RMSE_Full_Tree_2) %>% set_header_labels(RMSE_Full_Tree_2,RMSE_Full_Tree="RMSE Validation - Full Tree with CP=0",RMSE_Prune_Tree="RMSE Validation - Prune Tree with CP=0.0008", RMSE_Validation="RMSE Validation - First Tree with CP=0.001")
+flextable(RMSE_Full_Tree_2) %>% set_header_labels(RMSE_Full_Tree_2,RMSE_Full_Tree="RMSE Validation - Full Tree with CP=0",RMSE_Prune_Tree="RMSE Validation - Prune Tree with CP=0.00121", RMSE_Validation="RMSE Validation - First Tree with CP=0.001")
 
 ```
 
 </center>
 
-> We can see that Prunning our Regression Tree helped us getting a smaller RMSE compared to the Full Tree, but with have slightly higher RMSE compared to the Regression Tree asked in the first questions with CP=0.001. 
+> We can see that Prunning our Regression Tree helped us getting a smaller RMSE compared to the First Tree. By default we used **CP=0.001** in both training Regression Tree but by choosing the smallest x-error, the Prune Regression Tree had **CP=0.00121**
 
 ## b. Price Variable into Categorical Variable
 
@@ -636,7 +650,7 @@ print(paste(levels(New_Training_Tree$Binned_Price)))
 CT_Tree <- rpart(Binned_Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = New_Training_Tree, method = "class")
 
 # Plotting Tree
-CT_Tree_Plot <- rpart.plot(CT_Tree, type=0, varlen = 0, box.col=ifelse(CT_Tree$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE, tweak = 0.7)
+CT_Tree_Plot <- rpart.plot(CT_Tree, type=0, varlen = 0, box.col=ifelse(CT_Tree$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE)
 
 # Number of Leafs
 Length_Tree_CT = length(CT_Tree$frame$var[CT_Tree$frame$var == "<leaf>"])
@@ -712,7 +726,7 @@ DT::datatable(Predicted_Car_Price)
 
 ```{r Magnitude}
 
-CT_Tree_Plot <- rpart.plot(CT_Tree, type=0, varlen = 0, box.col=ifelse(CT_Tree$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE, tweak = 0.8)
+CT_Tree_Plot <- rpart.plot(CT_Tree, type=0, varlen = 0, box.col=ifelse(CT_Tree$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE)
 
 ```
 
