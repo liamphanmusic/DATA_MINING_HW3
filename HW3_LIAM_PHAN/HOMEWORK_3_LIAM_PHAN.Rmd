@@ -87,7 +87,7 @@ ToyotaDT <- fread("DATA/ToyotaCorolla.csv")
 ```{r preview of dataset}
 
 # Preview of the Dataset
-flextable(head(ToyotaDT,2)) %>% fontsize(size = 8, part = "all")
+DT::datatable(head(ToyotaDT))
 
 ```
 
