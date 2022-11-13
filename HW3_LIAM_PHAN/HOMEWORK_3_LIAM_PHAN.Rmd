@@ -581,17 +581,19 @@ print(paste("There is", Length_Tree_Pruned,"Number of Leaves"))
 
 ```{r Predictions Accuracy Validation Prune Tree}
 
-
+# Predicting
 Predictions_Full_Tree <- predict(Tree_Full, Validation_TREE)
 Predictions_Prune_Tree <- predict(Pruned_Tree, Validation_TREE)
 
+# RMSE of Full and Prune Tree
 RMSE_Full_Tree <- RMSE(Validation_TREE$Price, Predictions_Full_Tree)
 RMSE_Prune_Tree <- RMSE(Validation_TREE$Price, Predictions_Prune_Tree)
 
+# Data frame RMSE
 RMSE_Full_Tree_2 <- cbind(RMSE_Full_Tree,RMSE_Prune_Tree,RMSE_Validation)
-
 RMSE_Full_Tree_2 <- as.data.frame(RMSE_Full_Tree_2)
 
+# Printing Table
 flextable(RMSE_Full_Tree_2) %>% set_header_labels(RMSE_Full_Tree_2,RMSE_Full_Tree="RMSE Validation - Full Tree with CP=0",RMSE_Prune_Tree="RMSE Validation - Prune Tree with CP=0.0008", RMSE_Validation="RMSE Validation - First Tree with CP=0.001")
 
 ```
@@ -602,9 +604,69 @@ flextable(RMSE_Full_Tree_2) %>% set_header_labels(RMSE_Full_Tree_2,RMSE_Full_Tre
 
 ## b. Price Variable into Categorical Variable
 
+Here are the Binned_Price Variable into 20 levels
+
+```{r Price into Categorical}
+
+# Duplicating Training Data 
+New_Training_Tree <- Training_TREE
+
+# Cutting into 20 breaks the Price Variable
+New_Training_Tree$Price <- cut(New_Training_Tree$Price, breaks = 20)
+
+# Renaming Price -> Binned_Price
+colnames(New_Training_Tree)[3] <- "Binned_Price"
+
+# Printing Levels of Binned_Price
+print(paste(levels(New_Training_Tree$Binned_Price)))
+
+```
 
 
 ### i. Compare CT and RT. Are they different? (Structure, Top Predictors, Size of tree, etc.) Why? 
+
+### Running Class Tree
+
+<center>
+
+```{r CT}
+
+# Running Class Tree
+CT_Tree <- rpart(Binned_Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = New_Training_Tree, method = "class")
+
+# Plotting Tree
+prp(CT_Tree,type = 1, under = TRUE, split.font = 1, varlen = -10,box.col=ifelse(CT_Tree$frame$var == "<leaf>", 'gray', 'white'))
+
+# Number of Leafs
+Length_Tree_CT = length(CT_Tree$frame$var[CT_Tree$frame$var == "<leaf>"])
+print(paste("There is", Length_Tree_CT,"Number of Leaves"))
+
+
+```
+
+</center>
+
+> We can see that this Class Tree is having 8 Terminal Nodes (or Leaves) and way smaller in depth compared to the regression Tree we used in the exercices before. There is up to 4 layers in this CT. 
+
+<center>
+
+### Importance of Variables in CT
+
+
+```{r Importance CT}
+
+# Most 3 or 4 specifications for predictions in car's price
+CT_Tree_Importance <- as.data.frame(CT_Tree$variable.importance)
+
+DT::datatable(CT_Tree_Importance)
+
+```
+
+</center>
+
+
+> Using our Class Tree output, we can see that the 4 most important variables are **Age_08_04**, **KM**, **CD_Player** and **Airco**
+
 
 ### ii. Predict the price, using the RT and the CT, of a used Toyota Corolla with the following specifications. 
 
@@ -613,10 +675,23 @@ flextable(RMSE_Full_Tree_2) %>% set_header_labels(RMSE_Full_Tree_2,RMSE_Full_Tre
 ![](IMAGES/Table 2.png)
 </center>
 
+
+```{r predictions based on table 9.6}
+
+Prediction_1_Car <- data.frame("Age_08_04"=77,"KM"=117000, "Fuel_Type"="Petrol","HP"=110,"Automatic"=0,"Doors"=5,"Quarterly_Tax"=100,"Guarantee_Period"=3, "Airco"=1, "Automatic"=0, "CD_Player"=0, "Powered_Windows"=0, "Sport_Model"=0, "Tow_Bar"=1)
+
+
+
+
+
+```
+
+
+
 ### iii. Compare the predictions in terms of the predictors that were used, the magnitude of the difference between the two predictions, and the advantages and disadvantages of the two methods. 
 
 
-```{r aggawga}
+```{r Magnitude}
 
 
 
