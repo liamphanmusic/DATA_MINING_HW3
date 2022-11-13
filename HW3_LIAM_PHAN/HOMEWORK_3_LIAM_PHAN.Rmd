@@ -52,8 +52,6 @@ library(leaps) # Exhaustive Search
 library(forecast) # Predictions
 library(neuralnet) # Neural Network
 library(nnet) # Neural Network
-library(rpart) # Regression Trees
-library(ipred) # bagging
 
 ```
 
@@ -419,6 +417,17 @@ print(paste("There is", Length_Tree_1,"Number of Leaves"))
 ```
 
 
+### CP Plot
+
+```{r size of tree 1}
+
+# Tree Size
+plotcp(Tree_1)
+
+```
+
+> With small CP, Our Regression Tree can go until 31 Leaves... But we see that the relative error seems to already be small enough between 9 and 13 Leaves. 
+
 ### i. Which appear to be the three or four most important car specifications for predicting the car's price? 
 
 ```{r Specifications for Predictions}
@@ -434,19 +443,33 @@ DT::datatable(Tree_1_Importance)
 
 > Using our Regression Tree output, we can see that the first 4 split are based on Age only. Then the 4 most important variables are **Age_08_04**, **KM**, **Quarterly_Tax** and **HP**.
 
-# CP Plot
-
-```{r size of tree 1}
-
-# Tree Size
-plotcp(Tree_1)
-
-```
-
-> With small CP, Our Regression Tree can go until 31 Leaves... But we see that the relative error through 10 cross-validation seems to already be small enough between 9 and 13 Leaves. 
 
 ### ii. RMS Error between Training and Validation
 
+```{r RMS Error Training and Validation}
+
+# Predictions of Training and Validation
+Training_Predictions <- predict(Tree_1,Training_TREE)
+Validation_Predictions <- predict(Tree_1, Validation_TREE)
+
+# RMSE Error ----------------------------
+
+# Training RMSE
+
+RMSE_Training <- RMSE(Training_Predictions,Tree_1)
+
+
+# Validation RMSE 
+
+
+
+
+
+
+
+
+
+```
 
 
 
