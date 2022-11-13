@@ -635,7 +635,7 @@ print(paste(levels(New_Training_Tree$Binned_Price)))
 CT_Tree <- rpart(Binned_Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = New_Training_Tree, method = "class")
 
 # Plotting Tree
-prp(CT_Tree,type = 1, under = TRUE, split.font = 1, varlen = -10,box.col=ifelse(CT_Tree$frame$var == "<leaf>", 'gray', 'white'))
+CT_Tree_Plot <- prp(CT_Tree,type = 1, under = TRUE, split.font = 1, varlen = -10,box.col=ifelse(CT_Tree$frame$var == "<leaf>", 'gray', 'white'))
 
 # Number of Leafs
 Length_Tree_CT = length(CT_Tree$frame$var[CT_Tree$frame$var == "<leaf>"])
@@ -678,14 +678,31 @@ DT::datatable(CT_Tree_Importance)
 
 ```{r predictions based on table 9.6}
 
-Prediction_1_Car <- data.frame("Age_08_04"=77,"KM"=117000, "Fuel_Type"="Petrol","HP"=110,"Automatic"=0,"Doors"=5,"Quarterly_Tax"=100,"Guarantee_Period"=3, "Airco"=1, "Automatic"=0, "CD_Player"=0, "Powered_Windows"=0, "Sport_Model"=0, "Tow_Bar"=1)
+# Dataframe Car Specifcations for Predictions 
+Prediction_1_Car <- data.frame("Age_08_04"=77,"KM"=117000, "Fuel_Type"="Petrol","HP"=110,"Automatic"=0,"Doors"=5,"Quarterly_Tax"=100,"Mfr_Guarantee"=0,"Guarantee_Period"=3, "Airco"=1, "Automatic"=0, "CD_Player"=0, "Powered_Windows"=0, "Sport_Model"=0, "Tow_Bar"=1)
 
+# Predicting Car Price with CT
+Predicted_Car_Price <- predict(CT_Tree,Prediction_1_Car)
 
+# Removing 0 Probabilities
+Predicted_Car_Price <- Predicted_Car_Price[, colSums(Predicted_Car_Price != 0) > 0]
 
+# As Dataframe for ggplotting
+Predicted_Car_Price <- as.data.frame(Predicted_Car_Price)
+
+# Renaming Column
+colnames(Predicted_Car_Price) <- "Probabilities in %"
+
+# Probabilities Rounding and %
+Predicted_Car_Price$`Probabilities in %` <- Predicted_Car_Price$`Probabilities in %` * 100
+
+Predicted_Car_Price$`Probabilities in %` <- round(Predicted_Car_Price$`Probabilities in %`,2)
+
+# Flextable
+DT::datatable(Predicted_Car_Price)
 
 
 ```
-
 
 
 ### iii. Compare the predictions in terms of the predictors that were used, the magnitude of the difference between the two predictions, and the advantages and disadvantages of the two methods. 
@@ -693,12 +710,11 @@ Prediction_1_Car <- data.frame("Age_08_04"=77,"KM"=117000, "Fuel_Type"="Petrol",
 
 ```{r Magnitude}
 
-
-
-
+CT_Tree_Plot <- prp(CT_Tree,type = 1, under = TRUE, split.font = 1, varlen = -10,box.col=ifelse(CT_Tree$frame$var == "<leaf>", 'gray', 'white'))
 
 ```
 
+> By using the CT Tree, we first start with Age -> Yes, then 
 
 
 # <span style="color: #1c6155;">Ex 11.3</span> 
