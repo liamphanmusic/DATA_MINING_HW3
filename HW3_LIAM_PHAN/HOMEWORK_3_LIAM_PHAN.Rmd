@@ -452,17 +452,69 @@ DT::datatable(Tree_1_Importance)
 Training_Predictions <- predict(Tree_1,Training_TREE)
 Validation_Predictions <- predict(Tree_1, Validation_TREE)
 
-# RMSE Error ----------------------------
+# RMSE  ------------------------------------------------------------------------
 
 # Training RMSE
-
-RMSE_Training <- RMSE(Training_Predictions,Tree_1)
-
+RMSE_Training <- RMSE(Training_Predictions,Training_TREE$Price)
 
 # Validation RMSE 
+RMSE_Validation <- RMSE(Validation_Predictions, Validation_TREE$Price)
+
+# All RMSE
+BIND_Training_Validation <- cbind(RMSE_Training,RMSE_Validation)
+RMSE_Dataframe <- as.data.frame(BIND_Training_Validation)
+
+flextable(RMSE_Dataframe) %>% set_header_labels(RMSE_Dataframe, values = list(RMSE_Training="RMSE Training",RMSE_Validation="RMSE Validation")
+  )
+
+```
+
+### Computing Residuals Boxplots
+
+```{r residuals Tree 1}
+# Computing Residuals --------------------------------------------------------------
+Residuals_Training_Tree_1 <- Training_TREE$Price - Training_Predictions
+Residuals_Validation_Tree_1 <- Validation_TREE$Price - Validation_Predictions
+
+Residuals_Training_Tree_1 <- as.data.frame(Residuals_Training_Tree_1)
+Residuals_Validation_Tree_1 <- as.data.frame(Residuals_Validation_Tree_1)
+
+# Boxplots -------------------------------------------------------------------------
+
+library(ggplot2)
+
+# Boxplot Training
+box1 <- ggplot(Residuals_Training_Tree_1) +
+ aes(x = "", y = Residuals_Training_Tree_1) +
+ geom_boxplot(fill = "#1c6155") +
+ labs(x = "", y = "Price Residuals", title = "Residuals Between Training and Predicted", subtitle = "Boxplot", 
+ caption = "") +
+ theme_minimal() + ylim(-10000, 10000) + theme(text = element_text(size = 8))    
+
+# Boxplot Validation
+box2 <- ggplot(Residuals_Validation_Tree_1) +
+ aes(x = "", y = Residuals_Validation_Tree_1) +
+ geom_boxplot(fill = "#1c6155") +
+ labs(x = "", y = "Price Residuals", title = "Residuals Between Validation and Predicted", subtitle = "Boxplot", 
+ caption = "") +
+ theme_minimal() + ylim(-10000, 10000) + theme(text = element_text(size = 8))    
+
+# Combine them
+grid.arrange(box1,box2, ncol=2)
+
+```
+
+
+### iii. How can we achieve predictions for the training set that are not equal to the actual prices? 
 
 
 
+
+
+### iv. Prune the full tree using the cross-validation error. Compared to the full tree, what is the predictive performance for the validation set?
+
+
+```{r pruning full tree}
 
 
 
@@ -471,12 +523,6 @@ RMSE_Training <- RMSE(Training_Predictions,Tree_1)
 
 ```
 
-
-
-### iii. How can we achieve predictions for the training set that are not equal to the actual prices? 
-
-
-### iv. Prune the full tree using the cross-validation error. Compared to the full tree, what is the predictive performance for the validation set?
 
 
 ## b. Price Variable into Categorical Variable
