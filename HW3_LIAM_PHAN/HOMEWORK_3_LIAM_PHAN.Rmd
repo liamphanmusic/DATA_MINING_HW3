@@ -383,7 +383,9 @@ print(paste(round(Prop_Train,2),"% In Training", round(Prop_Valid,2),"% In Valid
 
 ```
 
-## a. Run a Regression Tree
+## a. Run a Regression Tree 
+
+with CP=0.001 and "ANOVA" Method
 
 ```{r Regression Tree}
 
@@ -395,14 +397,24 @@ library(rpart)
 library(rpart.plot)
 
 # As Factor Fuel_Type
-ToyotaDT_TREE$Fuel_Type <- as.factor(ToyotaDT_TREE$Fuel_Type)
+#ToyotaDT_TREE$Fuel_Type <- as.factor(ToyotaDT_TREE$Fuel_Type)
+
+# Regression Tree Parameters
+cp_1 = 0.001
+method = "anova"
+minbucket = 1
+maxdepth = 30 #30 maximum
 
 # Running Regression Tree
-Tree_1 <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE,method  = "anova", cp = 0.001)
+Tree_1 <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE, control = rpart.control(maxdepth = maxdepth, cp=cp_1,minbucket = minbucket, method=method))
 
 # Plotting Regression Tree
-rpart.plot(Tree_1, fallen.leaves = FALSE, box.palette ="Greens", tweak = 1.2)
+prp(Tree_1,type = 1, extra = 1, under = TRUE, split.font = 1, varlen = -10,box.col=ifelse(Tree_1$frame$var == "<leaf>", 'gray', 'white'))
 
+# Number of Leafs
+Length_Tree_1 = length(Tree_1$frame$var[Tree_1$frame$var == "<leaf>"])
+
+print(paste("There is", Length_Tree_1,"Number of Leaves"))
 
 ```
 
@@ -411,13 +423,31 @@ rpart.plot(Tree_1, fallen.leaves = FALSE, box.palette ="Greens", tweak = 1.2)
 
 ```{r Specifications for Predictions}
 
+# Most 3 or 4 specifications for predictions in car's price
+Tree_1
 
+Tree_1_Importance <- as.data.frame(Tree_1$variable.importance)
 
-
+DT::datatable(Tree_1_Importance)
 
 ```
 
+> Using our Regression Tree output, we can see that the first 4 split are based on Age only. Then the 4 most important variables are **Age_08_04**, **KM**, **Quarterly_Tax** and **HP**.
+
+# CP Plot
+
+```{r size of tree 1}
+
+# Tree Size
+plotcp(Tree_1)
+
+```
+
+> With small CP, Our Regression Tree can go until 31 Leaves... But we see that the relative error through 10 cross-validation seems to already be small enough between 9 and 13 Leaves. 
+
 ### ii. RMS Error between Training and Validation
+
+
 
 
 ### iii. How can we achieve predictions for the training set that are not equal to the actual prices? 
