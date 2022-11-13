@@ -52,6 +52,7 @@ library(leaps) # Exhaustive Search
 library(forecast) # Predictions
 library(neuralnet) # Neural Network
 library(nnet) # Neural Network
+library(rpart) # Regression Trees
 
 ```
 
@@ -385,9 +386,14 @@ print(paste(round(Prop_Train,2),"% In Training", round(Prop_Valid,2),"% In Valid
 library(rpart)
 library(rpart.plot)
 
-Tree_1 <- rpart(Ownership ~ ., data = mower.df,
-control = rpart.control(maxdepth = 2), method = "class")
 
+# As Factor Fuel_Type
+ToyotaDT_TREE$Fuel_Type <- as.factor(ToyotaDT_TREE$Fuel_Type)
+
+
+Tree_1 <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE, control = rpart.control(cp = 0.001), method = "class")
+
+prp(Tree_1, type = 1, extra = 1, split.font = 1, varlen = -10)
 
 
 
