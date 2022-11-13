@@ -53,6 +53,7 @@ library(forecast) # Predictions
 library(neuralnet) # Neural Network
 library(nnet) # Neural Network
 library(rpart) # Regression Trees
+library(ipred) # bagging
 
 ```
 
@@ -359,6 +360,9 @@ rm(list = ls())
 
 ```{r Data Preprocessing}
 
+# Set Seed 
+set.seed(1)
+
 ToyotaDT_TREE <- fread("DATA/ToyotaCorolla.csv")
 
 # Input Cutting Ratio
@@ -383,19 +387,21 @@ print(paste(round(Prop_Train,2),"% In Training", round(Prop_Valid,2),"% In Valid
 
 ```{r Regression Tree}
 
+# Set Seed
+set.seed(1)
+
+# Regression Tree Packages
 library(rpart)
 library(rpart.plot)
-
 
 # As Factor Fuel_Type
 ToyotaDT_TREE$Fuel_Type <- as.factor(ToyotaDT_TREE$Fuel_Type)
 
+# Running Regression Tree
+Tree_1 <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE,method  = "anova", cp = 0.001)
 
-Tree_1 <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE, control = rpart.control(cp = 0.001), method = "class")
-
-prp(Tree_1, type = 1, extra = 1, split.font = 1, varlen = -10)
-
-
+# Plotting Regression Tree
+rpart.plot(Tree_1, fallen.leaves = FALSE, box.palette ="Greens", tweak = 1.2)
 
 
 ```
@@ -403,6 +409,13 @@ prp(Tree_1, type = 1, extra = 1, split.font = 1, varlen = -10)
 
 ### i. Which appear to be the three or four most important car specifications for predicting the car's price? 
 
+```{r Specifications for Predictions}
+
+
+
+
+
+```
 
 ### ii. RMS Error between Training and Validation
 
@@ -720,3 +733,5 @@ RMSE_VALIDATION_DATA <- set_header_labels(RMSE_VALIDATION_DATA, RMSE_Validation 
 [Data Science Plus - Fitting Neural Network in R](https://datascienceplus.com/fitting-neural-network-in-r/)
 
 [Backtransform with the Caret Package and Preprocess() Function](https://www.tradersinsight.news/ibkr-quant-news/r-code-back-transform-from-carets-preprocess/)
+
+[Regression Trees Github Tutorial]()
