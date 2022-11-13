@@ -635,7 +635,7 @@ print(paste(levels(New_Training_Tree$Binned_Price)))
 CT_Tree <- rpart(Binned_Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = New_Training_Tree, method = "class")
 
 # Plotting Tree
-CT_Tree_Plot <- prp(CT_Tree,type = 1, under = TRUE, split.font = 1, varlen = -10,box.col=ifelse(CT_Tree$frame$var == "<leaf>", 'gray', 'white'))
+CT_Tree_Plot <- rpart.plot(CT_Tree, type=0, varlen = 0, box.col=ifelse(CT_Tree$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE, tweak = 0.7)
 
 # Number of Leafs
 Length_Tree_CT = length(CT_Tree$frame$var[CT_Tree$frame$var == "<leaf>"])
@@ -710,11 +710,11 @@ DT::datatable(Predicted_Car_Price)
 
 ```{r Magnitude}
 
-CT_Tree_Plot <- prp(CT_Tree,type = 1, under = TRUE, split.font = 1, varlen = -10,box.col=ifelse(CT_Tree$frame$var == "<leaf>", 'gray', 'white'))
+CT_Tree_Plot <- rpart.plot(CT_Tree, type=0, varlen = 0, box.col=ifelse(CT_Tree$frame$var == "<leaf>", '#8db0aa', 'white'), fallen.leaves = FALSE, extra = FALSE, tweak = 0.8)
 
 ```
 
-> By using the CT Tree, we first start with Age -> Yes, then 
+> By using the CT Tree, we first start with **Age_08_04** >= 57 -> *Yes*, then **Age_08_04** >=70 -> *Yes*, then **KM** >= *174000* -> *No* and we stop at (7.16e+03,8.57e+03] which is 53.57% probability for this specific car. We are using far less steps to get to our predictions compared to the Regression Tree. By using CT instead of RT, we are not getting an exact value of price, but instead a probability distribution of the different Price Bins our car could be in and thus selecting the highest probability would get our car's price into a category. CT have less precisions in outcome predictions but have far less branches and terminal nodes, thus more easy for reading and understanding each variables importance in the prediction process, as well as giving probabilities, which can be useful depending on the context.   
 
 
 # <span style="color: #1c6155;">Ex 11.3</span> 
