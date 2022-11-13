@@ -382,6 +382,11 @@ print(paste(round(Prop_Train,2),"% In Training", round(Prop_Valid,2),"% In Valid
 
 ```{r Regression Tree}
 
+library(rpart)
+library(rpart.plot)
+
+Tree_1 <- rpart(Ownership ~ ., data = mower.df,
+control = rpart.control(maxdepth = 2), method = "class")
 
 
 
