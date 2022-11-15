@@ -256,7 +256,7 @@ sum$cp
 
 <br />
 
->  The closest Cp to predictors+1 is the last one (16th value) which is 16, close to 17 = p+1 = 16+1.
+>  The closest Cp to predictors+1 is the last one (16th value) which is 16.
 
 ### 2. Popular Subset Selection Algorithms
 
