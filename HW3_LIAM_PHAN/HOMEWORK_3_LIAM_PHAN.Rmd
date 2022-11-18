@@ -121,7 +121,7 @@ gg_miss_var(ToyotaDT, show_pct = TRUE)
 </center>
 
 
-> We can see that there is no missing values in our dataset ToyotaCorolla.csv
+> We can see that there is no missing values in our dataset ToyotaCorolla.csv . 
 
 
 # <span style="color: #1c6155;">Ex 6.4</span> 
@@ -189,7 +189,7 @@ summary(Regression_Price)
 ```
 
 
-> Taking into account all the requested variables in our linear regression without further analysis or variable selection, we can observe a fairly high Multiple R-squared, close to 0.8915 and a fit of 0.8891. We have a very significant F-statistic, close to 0 which means that this model is already quite complex and better than a naive model including only the intercept. The most significant variables are the **Age** of the car, the number of kilometres (**KM**) and the automatic air conditioning (**Automatic_airco**), since all have the smallest p-value.
+> Taking into account all the requested variables in our linear regression without further analysis or variable selection, we can observe a fairly high Multiple R-squared, close to 0.9 and a adjusted R-squared of 0.8891. We have a very significant F-statistic, close to 0 which means that this model is already quite complex and better than a naive model including only the intercept. The most significant variables are the **Age** of the car, the number of kilometres (**KM**) and the automatic air conditioning (**Automatic_airco**), since all have the smallest p-value. **Quarterly Tax** would be our fourth most significant explanatory variable.
 
 <br />
 
@@ -244,7 +244,7 @@ sum$rsq
 sum$adjr2
 ```
 
-> Adjusted R-Squared keep increasing until the 15th value, 0.8890985 which is slight higher than the last one (16th).
+> Adjusted R-Squared keep increasing until the 15th value, 0.8890985 which is slight higher than the last one (16th). Thus we would have a model with 15 variables, excluding Fuel_TypeDiesel and Fuel_TypePetrol. (Since we dummified 1 categorical variable into 3 dummies, the third dummy is redundant thus the 16 variables and exclusion of 1 more dummy in the model.)
 
 <br />
 
@@ -256,7 +256,11 @@ sum$cp
 
 <br />
 
->  The closest Cp to predictors+1 is the last one (16th value) which is 16.
+>  For our model selection, the lowest Cp value under the threshold P+1 = 17+1 = 18 is having a Cp = 16 which is the 16th model, thus the full model. 
+
+### Resume of Exhaustive Research
+
+> Adjusted R-squared and Mallow's Cp give us 2 different possibilities, a model with 15 or 16 variables. 
 
 ### 2. Popular Subset Selection Algorithms
 
@@ -264,12 +268,17 @@ sum$cp
 
 ```{r forward, warning=FALSE}
 
+Training_Selection <- Training[,c("Price","Age_08_04","KM","Fuel_Type","HP","Automatic","Doors","Quarterly_Tax", "Mfr_Guarantee", "Guarantee_Period", "Airco", "Automatic_airco", "CD_Player", "Powered_Windows" , "Sport_Model", "Tow_Bar")]
+
 # Setting Forward Selection
-Regression_Price_Forward <- step(Regression_Price, direction = "forward")
+Regression_Price_Null <- lm(Price ~ 1, data=Training_Selection)
+Regression_Price_Forward <- step(Regression_Price_Null, scope=list(lower=Regression_Price_Null,upper=Regression_Price), direction = "forward")
 
 summary(Regression_Price_Forward) 
 
 ```
+
+> Forward removed 1 variables, Mfr Guarantee.  
 
 #### 2.2 Backward Elimination
 
@@ -283,6 +292,8 @@ summary(Regression_Price_Backward)
 
 ```
 
+> Backward removed 1 variable, Mfr_Guarantee. 
+
 #### 2.3 Stepwise Regression
 
 
@@ -295,13 +306,17 @@ summary(Regression_Price_Backward)
 
 ```
 
+> Stepwise removed 1 variable, Mfr_Guarantee. 
 
-> We can see that in both, Backward and Stepwise, only **Mfr_Guarantee** is dropped. Forward Selection keep all variables. 
+### Resume of Popular Subset Selection Algorithms
+
+> We can see that in all methods, Forward, Backward and Stepwise, only **Mfr_Guarantee** is dropped.
+
 
 ### a. What appear to be the three or four most important car specifications for predicting the car's price?
 
 
-> After the Exhaustive Search and Popular Subset Selection Algorithms, we should have those 3-4 most important variable for predicting car's price: **Age**, **KM**, **Automatic_airco** and **Quarterly_Tax**. Depending if we decided to drop the variable **Mfr_Guarante**, we might get slight different results in predictions, but the most important variables for predictions should stay the same. The Following Performance Assessment keep the same full model.
+> After the Exhaustive Search and Popular Subset Selection Algorithms, we should have those 3-4 most important variable for predicting car's price: **Age**, **KM**, **Automatic_airco** and **Quarterly_Tax**. Depending if we decided to drop the variable **Mfr_Guarante**, we might get slight different results in predictions, but the most important variables for predictions should stay the same. The Following Performance Assessment removed the variable **Mfr_Guarante**.
 
 
 ### b. Using metrics you consider usefull, assess the performance of the model in predicting prices. 
