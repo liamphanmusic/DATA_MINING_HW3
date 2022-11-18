@@ -326,21 +326,47 @@ summary(Regression_Price_Backward)
 
 ```{r performance of the model}
 
+# Linear OLS Regression on Training without Mfr_Guarantee
+Regression_Price_Optimized <- lm(Price ~ Age_08_04 + KM + Fuel_Type + HP + Automatic + Doors + Quarterly_Tax + Guarantee_Period + Airco + Automatic_airco + CD_Player + Powered_Windows + Sport_Model + Tow_Bar, data = Training)
+
 library(forecast)
 # use predict() to make predictions on a new set.
-car.lm.pred <- predict(Regression_Price, Validation)
-options(scipen=999, digits = 0)
+car.lm.pred <- predict(Regression_Price_Optimized, Validation)
+options(scipen=999, digits = 1)
 some.residuals <- Validation$Price[1:20] - car.lm.pred[1:20]
 data.frame("Predicted" = car.lm.pred[1:20], "Actual" = Validation$Price[1:20],
 "Residual" = some.residuals)
 options(scipen=999, digits = 3)
+
 # use accuracy() to compute common accuracy measures.
 accuracy(car.lm.pred, Validation$Price)
 
-```
-> Here the resulting metrics for our predictions errors. The closest to 0 the better. 
 
-### Histogram of Validation Errors
+```
+
+> Here the resulting metrics for our predictions errors. The closest to 0 the better for bias, RMSE should also be the smallest possible. 
+
+```{r performance of the model full}
+
+# Linear OLS Regression on Training with Mfr_Guarantee
+library(forecast)
+
+# use predict() to make predictions on a new set.
+car.lm.pred.full <- predict(Regression_Price, Validation)
+options(scipen=999, digits = 1)
+some.residuals <- Validation$Price[1:20] - car.lm.pred.full[1:20]
+data.frame("Predicted" = car.lm.pred.full[1:20], "Actual" = Validation$Price[1:20],
+"Residual" = some.residuals)
+options(scipen=999, digits = 3)
+
+# use accuracy() to compute common accuracy measures.
+accuracy(car.lm.pred.full, Validation$Price)
+
+```
+
+> Here the resulting metrics for our predictions errors with full model. The closest to 0 the better for bias, RMSE should also be the smallest possible. We can see that removing **Mfr_Guarantee** doesn't give better predictions accuracy since the RMSE and ME are both closer to 0 with the Full Model. Thus we would keep the Full Model for better accuracy. 
+
+### Histogram of Validation Errors with the Full Model
 
 <center>
 
@@ -350,7 +376,7 @@ library(forecast)
 car.lm.pred <- predict(Regression_Price, Validation)
 all.residuals <- Validation$Price - car.lm.pred
 length(all.residuals[which(all.residuals > -1406 & all.residuals < 1406)])/400
-hist(all.residuals, breaks = 25, xlab = "Residuals", main = "", col = "#1c6155")
+hist(all.residuals, main="Histogram of Residuals from Predictions against Validation", breaks = 25, xlab = "Residuals", col = "#1c6155")
 
 ```
 
@@ -412,9 +438,6 @@ set.seed(1)
 library(rpart)
 library(rpart.plot)
 
-# As Factor Fuel_Type
-#ToyotaDT_TREE$Fuel_Type <- as.factor(ToyotaDT_TREE$Fuel_Type)
-
 # Regression Tree Parameters
 cp_1 = 0.001
 method = "anova"
@@ -436,6 +459,8 @@ print(paste("There is", Length_Tree_1,"Number of Leaves"))
 
 </center>
 
+> This Regression Tree is limited to 30 splits by the function. In Green are the terminal nodes and the black text the condition to be evaluated before choosing a branch. We have 31 Leaves (Terminal Nodes)
+
 
 ### CP Plot
 
@@ -453,7 +478,6 @@ plotcp(Tree_1)
 > With small CP, Our Regression Tree can go until 31 Leaves... But we see that the relative error seems to already be small enough between 9 and 13 Leaves. 
 
 ### i. Which appear to be the three or four most important car specifications for predicting the car's price? 
-
 
 
 ```{r Specifications for Predictions}
@@ -504,6 +528,8 @@ flextable(RMSE_Dataframe) %>% set_header_labels(RMSE_Dataframe, values = list(RM
 
 </center>
 
+> RMSE for Validation is always higher since we are overfitting the model to our Training Set.
+
 ### Computing Residuals Boxplots
 
 <center>
@@ -547,25 +573,27 @@ combineWidgets(box1,box2, ncol=2)
 
 </center>
 
+> We have more outliers residuals in the Validation VS Predicted Boxplot since we are having less accuracy predictions. Training Vs Predicted is less subject to outliers since the model overfit the Training Set. 
+
 ### iii. How can we achieve predictions for the training set that are not equal to the actual prices? 
 
 
-> blablababla
+> This Question was removed from the errata book.
 
 
 ### iv. Prune the full tree using the cross-validation error. Compared to the full tree, what is the predictive performance for the validation set?
 
 
-CP Table of our full Tree Regression (**CP**=0.001)
+CP Table of our full Tree Regression (**CP** = 0.001)
 
 ```{r cp table}
 
 # Set Seed 
 set.seed(1)
 
-cp_2 = 0.001
+cp_2=0.001
 
-Tree_Full <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE, control = rpart.control(maxdepth = maxdepth, cp=cp_2, minbucket = minbucket, method=method))
+Tree_Full <- rpart(Price ~ Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data = Training_TREE, control = rpart.control(maxdepth = maxdepth, cp=cp_2,minbucket = minbucket, method=method))
 
 DT::datatable(Tree_Full$cptable)
 
@@ -605,6 +633,8 @@ print(paste("There is", Length_Tree_Pruned,"Number of Leaves"))
 
 </center>
 
+> Pruning our Tree left us with 28 leaves (Terminal Nodes) instead of 31. 
+
 ### Predictions Accuracy on Validation Set with Prune Tree
 
 <center>
@@ -624,13 +654,13 @@ RMSE_Full_Tree_2 <- cbind(RMSE_Prune_Tree,RMSE_Validation)
 RMSE_Full_Tree_2 <- as.data.frame(RMSE_Full_Tree_2)
 
 # Printing Table
-flextable(RMSE_Full_Tree_2) %>% set_header_labels(RMSE_Full_Tree_2,RMSE_Full_Tree="RMSE Validation - Full Tree with CP=0",RMSE_Prune_Tree="RMSE Validation - Prune Tree with CP=0.00121", RMSE_Validation="RMSE Validation - First Tree with CP=0.001")
+flextable(RMSE_Full_Tree_2) %>% set_header_labels(RMSE_Full_Tree_2,RMSE_Full_Tree="RMSE Validation - Full Tree with CP=0",RMSE_Prune_Tree="RMSE Validation - Prune Tree with CP=0.001", RMSE_Validation="RMSE Validation - First Tree with CP=0.001")
 
 ```
 
 </center>
 
-> We can see that Prunning our Regression Tree helped us getting a smaller RMSE compared to the First Tree. By default we used **CP=0.001** in both training Regression Tree but by choosing the smallest x-error, the Prune Regression Tree had **CP=0.00121**
+> We can see that Prunning our Regression Tree helped us getting a smaller RMSE compared to the First Tree. 
 
 ## b. Price Variable into Categorical Variable
 
@@ -695,10 +725,10 @@ DT::datatable(CT_Tree_Importance)
 </center>
 
 
-> Using our Class Tree output, we can see that the 4 most important variables are **Age_08_04**, **KM**, **CD_Player** and **Airco**
+> Using our Class Tree output, we can see that the 4 most important variables are **Age_08_04**, **KM**, **CD_Player** and **Airco**. Remember that the Regression Tree gave us **Age_08_04**, **KM**, **Quarterly_Tax** and **HP**, so they only have the first 2 variables in common and then differ in their importance weights. 
 
 
-### ii. Predict the price, using the RT and the CT, of a used Toyota Corolla with the following specifications. 
+### ii. Predict the price, using the CT, of a used Toyota Corolla with the following specifications. 
 
 <center> 
 
