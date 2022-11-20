@@ -218,7 +218,7 @@ sum <- summary(search)
 
 <br />
 
-### Show Models
+#### Show Models
 
 ```{r sum, warning=FALSE}
 # show models
@@ -227,7 +227,7 @@ sum$which
 
 <br />
 
-### R-Squared
+#### R-Squared
 
 ```{r R-squared, warning=FALSE}
 # show metrics
@@ -238,17 +238,17 @@ sum$rsq
 
 <br />
 
-### Adjusted R-Squared
+#### Adjusted R-Squared
 
 ```{r adjusted R-squared, warning=FALSE}
 sum$adjr2
 ```
 
-> Adjusted R-Squared keep increasing until the 15th value, 0.8890985 which is slight higher than the last one (16th). Thus we would have a model with 15 variables, excluding Fuel_TypeDiesel and Fuel_TypePetrol. (Since we dummified 1 categorical variable into 3 dummies, the third dummy is redundant thus the 16 variables and exclusion of 1 more dummy in the model.)
+> Adjusted R-Squared keep increasing until the 15th value, 0.8890985 which is slight higher than the last one (16th). Thus we would have a model with 15 variables, excluding **Fuel_TypeDiesel** and **Fuel_TypePetrol** (since we dumify this variable, 1 at least is redundant).
 
 <br />
 
-### Cp
+#### Cp
 
 ```{r Cp, warning=FALSE}
 sum$cp
@@ -258,7 +258,7 @@ sum$cp
 
 >  For our model selection, the lowest Cp value under the threshold P+1 = 17+1 = 18 is having a Cp = 16 which is the 16th model, thus the full model. 
 
-### Resume of Exhaustive Research
+#### Resume of Exhaustive Research
 
 > Adjusted R-squared and Mallow's Cp give us 2 different possibilities, a model with 15 or 16 variables. 
 
@@ -278,7 +278,7 @@ summary(Regression_Price_Forward)
 
 ```
 
-> Forward removed 1 variables, Mfr Guarantee.  
+> Forward removed 1 variables,  **Mfr_Guarantee**.  
 
 #### 2.2 Backward Elimination
 
@@ -292,23 +292,24 @@ summary(Regression_Price_Backward)
 
 ```
 
-> Backward removed 1 variable, Mfr_Guarantee. 
+> Backward removed 1 variable, **Mfr_Guarantee**.
 
 #### 2.3 Stepwise Regression
 
 
 ```{r stepwise, warning=FALSE}
 
-# Setting Backward Selection
-Regression_Price_Backward <- step(Regression_Price, direction = "both")
+# Setting Stepwise Selection
+Regression_Price_Stepwise <- step(Regression_Price, direction = "both")
 
-summary(Regression_Price_Backward)
+summary(Regression_Price_Stepwise)
 
 ```
 
-> Stepwise removed 1 variable, Mfr_Guarantee. 
+> Stepwise removed 1 variable, **Mfr_Guarantee**.
 
-### Resume of Popular Subset Selection Algorithms
+#### Resume of Popular Subset Selection Algorithms
+
 
 > We can see that in all methods, Forward, Backward and Stepwise, only **Mfr_Guarantee** is dropped.
 
@@ -316,13 +317,266 @@ summary(Regression_Price_Backward)
 ### a. What appear to be the three or four most important car specifications for predicting the car's price?
 
 
-> After the Exhaustive Search and Popular Subset Selection Algorithms, we should have those 3-4 most important variable for predicting car's price: **Age**, **KM**, **Automatic_airco** and **Quarterly_Tax**. Depending if we decided to drop the variable **Mfr_Guarante**, we might get slight different results in predictions, but the most important variables for predictions should stay the same. The Following Performance Assessment removed the variable **Mfr_Guarante**.
+> After the Exhaustive Search and Popular Subset Selection Algorithms, we should have those 3-4 most important variable for predicting car's price: **Age**, **KM**, **Automatic_airco** and **Quarterly_Tax**. Another possibility, would be to scale numerical variable such as **Price**, **KM** or **Weight** (with log for example) since they are symmetrical but subject to upright skewness (**Age** is not symmetrical). We would get better normality in those variables, thus better statistical test. 
+
+### Histogram of Price, KM, Weight and Age
+
+```{r Histogram Check, warning=FALSE}
+
+# Log Price 
+
+library(ggplot2)
+
+Price_Hist <-ggplotly(ggplot(ToyotaDT) +
+ aes(x = Price) +
+ geom_histogram(bins = 30L, fill = "#1c6155") +
+ labs(title = "", 
+ subtitle = "Price") +
+ theme_minimal())
+
+KM_Hist <-ggplotly(ggplot(ToyotaDT) +
+ aes(x = KM) +
+ geom_histogram(bins = 30L, fill = "#1c6155") +
+ labs(title = "", 
+ subtitle = "KM") +
+ theme_minimal())
+
+Weight_Hist <-ggplotly(ggplot(ToyotaDT) +
+ aes(x = Weight) +
+ geom_histogram(bins = 30L, fill = "#1c6155") +
+ labs(title = "", 
+ subtitle = "Weight") +
+ theme_minimal())
+
+Age_Hist <-ggplotly(ggplot(ToyotaDT) +
+ aes(x = Age_08_04) +
+ geom_histogram(bins = 30L, fill = "#1c6155") +
+ labs(title = "", 
+ subtitle = "Age") +
+ theme_minimal())
+
+
+All_Hist <- combineWidgets(Price_Hist,KM_Hist,Weight_Hist,Age_Hist, ncol=2, title="Histogram of Price, KM, Weight and Age", footer = "Original Dataset")
+All_Hist
+
+
+```
+
+<br />
+<br />
+
+> We can see that **Age_08_04** is not symmetrical at all, thus could not even be thought as log variable. Since **Price** is the most skewed variable, we could log it to check a new regression model in the log-level type. It is also a common practice to only log the dependent variable if it is part of the numerical list such as wage, firm sales, market value etc... 
+
+### Log(Price) In Training and Validation
+
+```{r log price, warning=FALSE}
+
+# Duplicate Dataset
+Log_Training <- Training
+Log_Validation <- Validation
+
+# Log Price in both Dataset
+Log_Training$Price <- log(Log_Training$Price)
+Log_Validation$Price <- log(Log_Validation$Price)
+
+# Histogram Check
+library(ggplot2)
+
+Log_Price_Hist <- ggplotly(ggplot(Log_Training) +
+ aes(x = Price) +
+ geom_histogram(bins = 30L, fill = "#1c6155") +
+ labs(title = "Histogram - Log(Price) in Training", 
+ subtitle = "") +
+ theme_minimal())
+
+Log_Price_Hist
+
+```
+
+
+> Price looks less upright skewed and more normally distributed in this Histogram. 
+
+### Regression with Log(Price)
+
+```{r regression log}
+
+# Linear OLS Regression on Training 
+Regression_Price_Log <- lm(Price ~ Age_08_04 + KM + Fuel_Type + HP + Automatic + Doors + Quarterly_Tax + Mfr_Guarantee + Guarantee_Period + Airco + Automatic_airco + CD_Player + Powered_Windows + Sport_Model + Tow_Bar, data = Log_Training)
+
+# Scientific Notation
+options(scipen = 999)
+
+summary(Regression_Price_Log)
+
+
+```
+
+> We can now see that Multiple R-squared is lower than the standard Regression model without log(**Price**), and that **Mfr_Guarantee** and **Airco** are now quite significant. **CD_Player** and **Sport_Model** are not significant anymore. We could reuse the process before for model selection (or variable selection).
+
+### 1. Exhaustive Search
+
+```{r exhaustive search log}
+
+# use regsubsets() in package leaps to run an exhaustive search.
+library(leaps)
+
+# Duplicate the Dataset Training for Modification of Dummy
+Log_Training_Search <- Log_Training
+
+# create dummies for fuel type
+Fuel_Type <- as.data.frame(model.matrix(~ 0 + Fuel_Type, data=Log_Training_Search))
+
+# replace Fuel_Type column with 2 dummies
+Log_Training_Search <- cbind(Log_Training_Search[,-8], Fuel_Type[,])
+
+# Search
+search_log <- regsubsets(Price ~ Age_08_04 + KM + Fuel_TypeCNG + Fuel_TypeDiesel + Fuel_TypePetrol + HP + Automatic + Doors + Quarterly_Tax + Mfr_Guarantee + Guarantee_Period + Airco + Automatic_airco + CD_Player + Powered_Windows + Sport_Model + Tow_Bar, data = Log_Training_Search, nbest = 1, nvmax = dim(Log_Training_Search)[2],
+method = "exhaustive")
+
+sum_log <- summary(search_log)
+
+```
+
+<br />
+
+#### Show Models
+
+```{r sum log, warning=FALSE}
+# show models
+sum_log$which
+```
+
+<br />
+
+#### R-Squared
+
+```{r R-squared log, warning=FALSE}
+# show metrics
+sum_log$rsq
+```
+
+> R-Squared keep increasing when we add more and more variables to the model, which is already expected since it doesn't account for the number of parameter (no penalty)
+
+<br />
+
+#### Adjusted R-Squared
+
+```{r adjusted R-squared log, warning=FALSE}
+sum_log$adjr2
+```
+
+> Adjusted R-Squared keep increasing until the 15th value, 0.8640313. Thus we would have a model without **Sport_Model** and **Fuel_TypePetrol** (since it's the third dummy variable, already redundant). 
+
+<br />
+
+#### Cp
+
+```{r Cp log, warning=FALSE}
+sum_log$cp
+```
+
+<br />
+
+>  For our model selection, the lowest Cp value under the threshold P+1 = 17+1 = 18 is having a Cp = 17.30922 which is the 13th model, thus removing **CD_Player**,  **Sport_Model**, **Tow_Bar** and **Fuel_TypePetrol** (dummy variable, already redundant). Those Variables were having the lowest significancy in our model. 
+
+#### Resume of Exhaustive Research
+
+> Adjusted R-squared and Mallow's Cp give us 2 different possibilities, a model with 13 or 15 variables, but in both removing **Sport_Model**. 
+
+### 2. Popular Subset Selection Algorithms
+
+#### 2.1 Forward Selection
+
+```{r forward log, warning=FALSE}
+
+Log_Training_Selection <- Log_Training[,c("Price","Age_08_04","KM","Fuel_Type","HP","Automatic","Doors","Quarterly_Tax", "Mfr_Guarantee", "Guarantee_Period", "Airco", "Automatic_airco", "CD_Player", "Powered_Windows" , "Sport_Model", "Tow_Bar")]
+
+# Setting Forward Selection
+Log_Regression_Price_Null <- lm(Price ~ 1, data=Log_Training_Selection)
+Log_Regression_Price_Forward <- step(Log_Regression_Price_Null, scope=list(lower=Log_Regression_Price_Null,upper=Regression_Price_Log), direction = "forward")
+
+summary(Log_Regression_Price_Forward) 
+
+```
+
+> Forward removed 2 variables, **Sport_Model** and **CD_Player**.
+
+#### 2.2 Backward Elimination
+
+
+```{r backward log, warning=FALSE}
+
+# Setting Backward Selection
+Log_Regression_Price_Backward <- step(Regression_Price_Log, direction = "backward")
+
+summary(Log_Regression_Price_Backward) 
+
+```
+
+> Backward removed 2 variables, **Sport_Model** and **CD_Player**.
+
+#### 2.3 Stepwise Regression
+
+
+```{r stepwise log, warning=FALSE}
+
+# Setting Setpwise Selection
+Log_Regression_Price_Stepwise <- step(Regression_Price_Log, direction = "both")
+
+summary(Log_Regression_Price_Stepwise)
+
+```
+
+> Stepwise removed 2 variables, **Sport_Model** and **CD_Player**.
+
+
+#### Resume of Popular Subset Selection Algorithms
+
+
+> We can see that in all methods, Forward, Backward and Stepwise, **Sport_Model** and **CD_Player** are dropped. This process removed 2 variables instead of 1 in the case of Level-Level Model. Logging Price changed some explanatory part of our variables, now all variables are significant in our Log-Level Model. 
+
+### 2 Regression Models
+
+### Level-Level without **Mfr_Guarantee**
+
+```{r regression level-level}
+
+# Linear OLS Regression on Training without Mfr_Guarantee
+Regression_Price_New <- lm(Price ~ Age_08_04 + KM + Fuel_Type + HP + Automatic + Doors + Quarterly_Tax + Guarantee_Period + Airco + Automatic_airco + CD_Player + Powered_Windows + Sport_Model + Tow_Bar, data = Training)
+
+# Scientific Notation
+options(scipen = 999)
+
+summary(Regression_Price_New)
+
+
+```
+
+> We are having a high Multiple R-squared as before, but **Airco** is still included and not significant. **Age_08_04**, **KM**, **Automatic_airco** and **Quarterly_Tax** are still (as predicted) the top 3-4 important variables in our Level-Level Model. 
+
+
+### Log-Level without **Sport_Model** and **CD_Player**
+
+```{r regression log-level}
+
+# Linear OLS Regression on Training 
+Regression_Price_Log_New <- lm(Price ~ Age_08_04 + KM + Fuel_Type + HP + Automatic + Doors + Quarterly_Tax + Mfr_Guarantee + Guarantee_Period + Airco + Automatic_airco + Powered_Windows + Tow_Bar, data = Log_Training)
+
+# Scientific Notation
+options(scipen = 999)
+
+summary(Regression_Price_Log_New)
+
+
+```
+
+> We are having a lowest Multiple R-squared than Level-Level Model, but all variables are significant. **Age_08_04**, **KM**, **Automatic_airco** and **Quarterly_Tax** are still (as predicted) the top 3-4 important variables in our Log-Level Model, and **Quarterly_Tax** is even more significant in this model than the Level-level one. 
 
 
 ### b. Using metrics you consider usefull, assess the performance of the model in predicting prices. 
 
 
-### Computing Prediction with the Regression Model on Validation - Accuracy
+### Computing Prediction with the Regression Model (Level-Level) on Validation - Accuracy
 
 ```{r performance of the model}
 
@@ -344,7 +598,7 @@ accuracy(car.lm.pred, Validation$Price)
 
 ```
 
-> Here the resulting metrics for our predictions errors. The closest to 0 the better for bias, RMSE should also be the smallest possible. 
+> Here the resulting metrics for our predictions errors. The closest to 0 the better for accuracy (especially for RMSE)
 
 ```{r performance of the model full}
 
@@ -364,9 +618,9 @@ accuracy(car.lm.pred.full, Validation$Price)
 
 ```
 
-> Here the resulting metrics for our predictions errors with full model. The closest to 0 the better for bias, RMSE should also be the smallest possible. We can see that removing **Mfr_Guarantee** doesn't give better predictions accuracy since the RMSE and ME are both closer to 0 with the Full Model. Thus we would keep the Full Model for better accuracy. 
+> Here the resulting metrics for our predictions errors with full model. The closest to 0 the better for accuracy, RMSE should also be the smallest possible. We can see that removing **Mfr_Guarantee** doesn't give better predictions accuracy since the RMSE and ME are both closer to 0 with the Full Model. Thus we would keep the Full Model for better accuracy. 
 
-### Histogram of Validation Errors with the Full Model
+### Histogram of Validation Errors with the Full Model Level-Level
 
 <center>
 
@@ -382,7 +636,40 @@ hist(all.residuals, main="Histogram of Residuals from Predictions against Valida
 
 </center>
 
-> We can the residuals of our predictions on the validation set. The Spread is clearly visible, between -2000 and 2000 and normally distributed. Some extremes values for our residuals appear on the far right,.
+> We can see the residuals of our predictions on the Validation set. The Spread is clearly visible, between -2000 and 2000 and normally distributed. Some extremes values for our residuals appear on the far right,.
+
+
+
+### Computing Prediction with the Regression Model (Log-Level without **Sport_Model** and **CD_Player**) on Validation - Accuracy
+
+```{r performance of the model new}
+
+
+# Linear OLS Regression on Training without Mfr_Guarantee
+Log_Regression_Price_Optimized <- lm(Price ~ Age_08_04 + KM + Fuel_Type + HP + Automatic + Doors + Quarterly_Tax + Guarantee_Period + Airco + Automatic_airco + Powered_Windows + Tow_Bar, data = Log_Training)
+
+library(forecast)
+# use predict() to make predictions on a new set.
+car.lm.pred_log <- predict(Log_Regression_Price_Optimized, Log_Validation)
+options(scipen=999, digits = 1)
+
+# Reverse Back Log
+car.lm.pred_log <- exp(car.lm.pred_log)
+Log_Validation$Price <- exp(Log_Validation$Price)
+
+some.residuals <- Log_Validation$Price[1:20] - car.lm.pred_log[1:20]
+data.frame("Predicted" = car.lm.pred_log[1:20], "Actual" = Log_Validation$Price[1:20],
+"Residual" = some.residuals)
+options(scipen=999, digits = 3)
+
+
+# use accuracy() to compute common accuracy measures.
+accuracy(car.lm.pred_log, Log_Validation$Price)
+
+
+```
+
+> we can see that logging our Price outcome variable and using model selection processes such as Exhaustive Research or Popular Subset Selection Algorithms led us having a better Regression Model (Log-Level without **Sport_Model** and **CD_Player**) in predictions. Level-Level Model with the same processes gave us RMSE of 1326 and here we have RMSE of 1202. 
 
 
 # <span style="color: #1c6155;">Ex 9.3</span> 
@@ -573,7 +860,7 @@ combineWidgets(box1,box2, ncol=2)
 
 </center>
 
-> We have more outliers residuals in the Validation VS Predicted Boxplot since we are having less accuracy predictions. Training Vs Predicted is less subject to outliers since the model overfit the Training Set. 
+> We have more outliers residuals in the Validation VS Predicted Boxplot since we are having less accuracy predictions. Training Vs Predicted is less subject to outliers since the model already overfit the Training Set. 
 
 ### iii. How can we achieve predictions for the training set that are not equal to the actual prices? 
 
@@ -735,6 +1022,7 @@ DT::datatable(CT_Tree_Importance)
 ![](IMAGES/Table 2.png)
 </center>
 
+### Predictions from the Table 2 using CT
 
 ```{r predictions based on table 9.6}
 
@@ -778,7 +1066,7 @@ CT_Tree_Plot <- rpart.plot(CT_Tree, type=0, varlen = 0, box.col=ifelse(CT_Tree$f
 </center>
 
 
-> By using the CT Tree, we first start with **Age_08_04** >= 57 -> *Yes*, then **Age_08_04** >=70 -> *Yes*, then **KM** >= *174000* -> *No* and we stop at (7.16e+03,8.57e+03] which is 53.57% probability for this specific car. We are using far less steps to get to our predictions compared to the Regression Tree. By using CT instead of RT, we are not getting an exact value of price, but instead a probability distribution of the different Price Bins our car could be in and thus selecting the highest probability would get our car's price into a category. CT have less precisions in outcome predictions but have far less branches and terminal nodes, thus more easy for reading and understanding each variables importance in the prediction process, as well as giving probabilities, which can be useful depending on the context.   
+> By using the CT Tree, we first start with **Age_08_04** >= 57 -> *Yes*, then **Age_08_04** >=70 -> *Yes*, then **KM** >= *174000* -> *No* and we stop at (7.16e+03,8.57e+03] which is 53.57% probability for this specific car. We are using far less steps to get to our predictions compared to the Regression Tree (which also used **Age_08_04** and **KM** as main predictors as well. By using CT instead of RT, we are not getting an exact value of price, but instead a probability distribution of the different Price Bins our car could be in and thus selecting the highest probability would get our car's price into that category. CT have less precisions in outcome predictions but have far less branches and terminal nodes, thus more easy for reading and understanding each variables importance in the prediction process, as well as giving probabilities, which can be useful depending on the context. One possible issue with CT, is that it is really difficult to assess the quality of the predictions since we need to either compare the category classification with confusion matrix, thus we are having far less precision since the size of the bins on numerical variable is assigned by us in a supervised manner, 20 bins might be changed to only 10 bins, thus this could lead to a far more accurate prediction in the confusion matrix, but not giving enough precision for real application in a company. 
 
 
 # <span style="color: #1c6155;">Ex 11.3</span> 
@@ -1051,15 +1339,15 @@ RMSE_VALIDATION_DATA <- set_header_labels(RMSE_VALIDATION_DATA, RMSE_Validation 
 
 #### i. What happens to the RMS error for the training data as the number of layers and nodes increases ?
 
-> RMSE tend to decrease the more when complexify our neural network (Model C in that case). This indicates we are overfitting more and more our model to the training dataset. 
+> RMSE tend to decrease the more when complexify our neural network (Model C in that case). This indicates we are overfitting more and more our model to the training dataset. Model A and B are having less and less RMSE until reaching Model C. 
 
 #### ii. What happens to the RMS error for the validation data?
 
-> The RMSE for the Validation Data is lower for the Neural Model B, and then it increases with the model C. 
+> The RMSE for the Validation Data is lower for the Neural Model B than Neural Model A, and then it increases with the model C. 
 
 #### iii. Comment on the appropriate number of layers and nodes for this application. 
 
-> Model A and B are close, but Model A is not in a overfitting situation, we should decide wether we prefer good predictions with Model B and more overfitting to the training dataset, or Model A which give less accurate result but with more stability in future predictions since it is not overfitting such as Model C. In this case, I would prefer the Model B giving more accurate results but more prone to instability, thus choosing 1 Hidden Layers with 5 Nodes. 
+> Model A and B are close, but Model A is not in a overfitting situation, we should decide wether we prefer good predictions with Model B and more overfitting to the training dataset, or Model A which give less accurate results but with more stability in future predictions since it is not overfitting such as Model C. In this case, I would prefer the Model B giving more accurate results but more prone to instability, thus choosing 1 Hidden Layers with 5 Nodes. Choosing Model C would for sure lead to far less accurate results in other predictions since the model is more instable due to its overfitting issue on the training set. 
 
 
 # <span style="color: #1c6155;">References</span>
